@@ -1,0 +1,68 @@
+.adItem {
+  width: auto;
+  display: flex;
+  margin: 8px;
+  background-color: #3B3B3B;
+  height: 140px;
+  border-radius: 3px;
+}
+.adItem img {
+  width: 140px;
+  height: 140px;
+  object-fit: cover;
+  border-top-left-radius: 3px;
+  border-bottom-left-radius: 3px;
+}
+.adItem .adDescript {
+  height: 60px;
+  margin: 0px;
+  max-width: 100%;
+}
+.adItem .adDescript p {
+  color: #bdbdbd;
+  margin: 10px;
+}
+.adItem .adInfo {
+  height: 80px;
+  display: flex;
+  flex-direction: row;
+}
+.adItem .adInfo .typeAd {
+  font-weight: 800;
+}
+.adItem .adInfo .typeAd1 {
+  color: blueviolet;
+}
+.adItem .adInfo .typeAd2 {
+  color: darkcyan;
+}
+.adItem .adInfo .typeAd3 {
+  color: forestgreen;
+}
+.adItem .adInfo .typeAd4 {
+  color: hotpink;
+}
+.adItem .adInfo .dataAd {
+  font-weight: 200;
+}
+.adItem .adInfo > div {
+  display: flex;
+  flex-direction: column;
+}
+.adItem .adAutor {
+  width: 55%;
+}
+.adItem .adAutor p {
+  margin: 3px;
+  margin-left: 10px;
+}
+.adItem .adAutor + div {
+  display: flex;
+  justify-content: center;
+  padding-bottom: 8px;
+}
+.adItem > div + div {
+  display: flex;
+  flex-direction: column;
+  width: -webkit-fill-available;
+}

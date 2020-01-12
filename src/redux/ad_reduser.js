@@ -1,0 +1,80 @@
+const SOME_ACTION = 'SOME_ACTION';
+let initialState = [
+    {
+        id: 1,
+        img: 'http://map.vn.ua/media/product/5228/0/79609/product_5a968bd33c799.jpg',
+        description: 'Продам колу або поміняю на сіжки',
+        autor: 'Aртур',
+        autorId: 1,
+        typeClass: 0,
+        typeText: 'продаж/бартер',
+        adData: '12.01.20 16:55'
+    },
+    {
+        id: 2,
+        img: 'http://masterklass-krasivo.ru/wp-content/uploads/2013/06/5Zakolki-svoimi-rukami.jpg',
+        description: 'Знайшлась заколка, забрати можете в бюро знахідок',
+        autor: 'Вася',
+        autorId: 2,
+        typeClass: 1,
+        typeText: 'оголошення',
+        adData: '13.01.20 15:40'
+    },
+    {
+        id: 3,
+        img: 'https://apollo-ireland.akamaized.net/v1/files/rzzyg4cmwxj9-UA/image;s=644x461',
+        description: 'Продам білет на всі дні, 800 грн',
+        autor: 'Оля',
+        autorId: 3,
+        typeClass: 2,
+        typeText: 'продаж',
+        adData: '13.01.20 18:26'
+    },
+    {
+        id: 4,
+        img: null,
+        description: 'Куплю сигарет, дорого',
+        autor: 'Перчик',
+        autorId: 4,
+        typeClass: 3,
+        typeText: 'купівля/бартер',
+        adData: '14.01.20 13:24'
+    },
+    {
+        id: 6,
+        img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Finlandia_Classic_vodka.jpg/1200px-Finlandia_Classic_vodka.jpg',
+        description: 'поділюсь алкоголем в замін на запивон',
+        autor: 'Настя',
+        autorId: 6,
+        typeClass: 0,
+        typeText: 'продаж/бартер',
+        adData: '14.01.20 16:11'
+    },
+    {
+        id: 7,
+        img: null,
+        description: 'потрібні дрова, пишіть',
+        autor: 'Санчес',
+        autorId: 7,
+        typeClass: 3,
+        typeText: 'купівля/бартер',
+        adData: '14.01.20 16:11'
+    }
+
+];
+
+const adReducer = (state = initialState, action) => {
+    switch (action.type) {
+        case SOME_ACTION: {
+            return ;
+        }
+        default: {
+            return state;
+        }
+    }
+
+}
+
+// export let addMessage = (textMessage) => ({ type: ADD_MESSAGE, textMessage });
+
+export default adReducer;
