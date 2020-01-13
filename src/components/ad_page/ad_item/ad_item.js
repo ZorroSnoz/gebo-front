@@ -1,9 +1,9 @@
 import React from 'react';
-import s from '../ad_item/ad_item.module.css';
+import s from './ad_item.module.css';
 import Button from '@material-ui/core/Button';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
-import Icon from '@material-ui/core/Icon';
-import peacePicture from '../../images/peace.jpg';
+import peacePicture from '../../../images/peace.jpg';
+import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 
 let AdItem = (props) => {
     let {id, img, description, autor, autorId, typeClass, typeText, adData} = props.item;
@@ -24,7 +24,7 @@ let AdItem = (props) => {
   aria-label="vertical outlined primary button group"
 >
   <Button>Написати</Button>
-  <Button><Icon>dehaze</Icon></Button>
+  <Button><MoreHorizIcon/></Button>
 </ButtonGroup>
                 </div>
             </div>

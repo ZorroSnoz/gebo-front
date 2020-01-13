@@ -1,0 +1,33 @@
+.logoContainer img {
+  width: 60xp;
+  height: 60px;
+  border-radius: 3px;
+  margin: 5px;
+}
+.logoContainer {
+  display: flex;
+  flex-direction: row;
+  width: 50%;
+  align-items: center;
+}
+.logoContainer h1 {
+  margin-left: 10px;
+}
+.buttonsBar {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 50%;
+}
+.headerContainer {
+  position: fixed;
+  background-color: #3B3B3B;
+  width: 409px;
+  z-index: 1;
+  height: 70px;
+  display: flex;
+  flex-direction: row;
+}
+.headerFixedBlock {
+  height: 70px;
+}

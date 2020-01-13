@@ -1,9 +1,13 @@
 import React from 'react';
-import AdItemCon from '../ad_item/ad_item_container';
+import Header from '../header/header';
+import AdItemContainer from './ad_item/ad_item_container';
+import AddAdButton from './add_ad_button/add_ad_button';
 
 let Ad = () => {
     return (<>
-<AdItemCon />
+    <Header/>
+<AdItemContainer/> 
+<AddAdButton/>
 </>
     );
 };
