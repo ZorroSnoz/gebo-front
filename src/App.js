@@ -18,7 +18,7 @@ let {registered, name } = props.login;
 
 let mapStateToProps = (state) => {
   return {
-      login: state.loginReduser
+      login: state.loginPage
   }
 };
 

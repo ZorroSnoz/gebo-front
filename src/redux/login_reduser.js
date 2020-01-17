@@ -1,6 +1,6 @@
 const SOME_ACTION = 'SOME_ACTION';
 let initialState = {
-registered: true,
+registered: false,
 name: 'Артур',
 id: 1
 };
