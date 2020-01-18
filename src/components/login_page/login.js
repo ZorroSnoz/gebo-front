@@ -1,14 +1,33 @@
 import React from 'react';
 import s from './login_page.module.css';
 import { Field, reduxForm } from 'redux-form';
-import logo from '../../images/gebo_logo.jpg'
+import logo from '../../images/gebo_logo.jpg';
+import { setUser } from '../../redux/login_reduser';
+import { connect } from 'react-redux';
+import { setCookie } from '../../cookies_helper/cookies_functions';
+import { generatorId } from '../../cookies_helper/generator_id';
 
-let LoginPage = (props) => {
+////////////////////////////////// login page container component
+let LoginPageCon = (props) => {
 
   let onSubmit = (formData) => {
-    console.log(formData)
+    let newIdUser = generatorId();
+    setCookie('user', formData.login);
+    setCookie('idUser', newIdUser);
+    setCookie('registered', true);
+    let userData = { registered: true, name: formData.login, idUser: newIdUser };
+    props.setUser(userData)
   }
 
+  return (
+    <>
+      <LoginPage onSubmit={onSubmit} />
+    </>
+  );
+}
+let LoginPageContainer = connect(null, { setUser })(LoginPageCon);
+////////////////////////////////// login page component
+let LoginPage = ({ onSubmit, ...props }) => {
   return (
     <div className={s.loginContainer}>
       <div className={s.logoContainer}>
@@ -16,22 +35,26 @@ let LoginPage = (props) => {
         <h1>Gebo</h1>
       </div>
       <div className={s.loginForm}>
-        <h2>Вхід</h2>
+        <h2>ВХІД</h2>
         <ReduxLoginForm onSubmit={onSubmit} />
       </div>
     </div>
   );
 }
-
+/////////////////////// login form conponent
 let LoginForm = (props) => {
   return (
     <form onSubmit={props.handleSubmit} >
-      <Field placeholder={"Ім'я"} name={'login'} component={'input'}/>
-      <button>ПОГНАЛИ</button>
+      <Field name={'login'} component={InputLogin} />
+      <button type='submit'>ПОГНАЛИ</button>
     </form>
   )
 };
-
 let ReduxLoginForm = reduxForm({ form: 'login' })(LoginForm);
-
-export default LoginPage;
+///////////////////// input component for Field
+let InputLogin = ({ input, meta, ...props }) => {
+  return (
+    <input {...input} {...props} placeholder={"Ім'я"} className={s.inputForm} />
+  )
+}
+export default LoginPageContainer;
