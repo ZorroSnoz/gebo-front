@@ -4,8 +4,8 @@ import { Field, reduxForm } from 'redux-form';
 import logo from '../../images/gebo_logo.jpg';
 import { setUser } from '../../redux/login_reduser';
 import { connect } from 'react-redux';
-import { setCookie } from '../../cookies_helper/cookies_functions';
-import { generatorId } from '../../cookies_helper/generator_id';
+import { setCookie } from '../../services/cookies_functions';
+import { generatorId } from '../../services/generator_id';
 
 ////////////////////////////////// login page container component
 let LoginPageCon = (props) => {

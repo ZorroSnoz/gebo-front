@@ -4,7 +4,7 @@ import './App.css';
 import Login from './components/login_page/login';
 import Ad from './components/ad_page/ad_page';
 import { connect } from 'react-redux';
-import { getCookie, deleteCookie } from './cookies_helper/cookies_functions';
+import { getCookie, deleteCookie } from './services/cookies_functions';
 import { setUser } from './redux/login_reduser';
 import AddAdPageContainer from './components/add_ad_page/add_ad_page_container';
 
@@ -17,6 +17,11 @@ let App = (props) => {
       deleteCookie('registered')
       deleteCookie('user')
       deleteCookie('idUser')
+    }
+  });
+  document.addEventListener('keydown', function (event) {
+    if (event.altKey) {
+console.log(window.store.getState())
     }
   });
   ////////////////////////////////////////

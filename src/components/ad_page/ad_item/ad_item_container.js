@@ -14,7 +14,7 @@ let AdItemCon = (props) => {
 
 let mapStateToProps = (state) => {
     return {
-        ad: state.adPage,
+        ad: state.adPage.adsData,
         login: state.loginPage
     }
 };

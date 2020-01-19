@@ -6,7 +6,7 @@ import peacePicture from '../../../images/peace.jpg';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 
 let AdItem = (props) => {
-    let {id, img, description, autor, autorId, typeClass, typeText, adData} = props.item;
+    let {idAd, img, description, autor, autorId, typeClass, typeText, adData} = props.item;
     let typeClassName = [s.typeAd1, s.typeAd2, s.typeAd3, s.typeAd4]
     return (
         <div className={s.adItem}>
