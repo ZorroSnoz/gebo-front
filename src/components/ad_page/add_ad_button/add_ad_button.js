@@ -1,15 +1,16 @@
 import React from 'react';
-import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
-import Fab from '@material-ui/core/Fab';
 import s from './add_button.module.css';
+import { NavLink } from 'react-router-dom';
 
-let AddAdButton = () => {
+let AddAdButton = ({ addAd, ...props }) => {
     return (
         <div className={s.addButton}>
-            <Fab color="primary" size="large" aria-label="add">
-                <AddIcon style={{ fontSize: 30 }}  />
-            </Fab>
+            <NavLink to='/add-ad'>
+                <button>
+                    <AddIcon style={{ fontSize: 30 }} />
+                </button>
+            </NavLink>
         </div>
     );
 };

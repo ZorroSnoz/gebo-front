@@ -1,4 +1,5 @@
 import React from 'react';
+import { Route } from 'react-router-dom';
 // material ui-----------------
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -19,7 +20,7 @@ export default function MenuButton() {
     };
     return (
         <>
-            <Button color="inherit"><FilterListIcon style={{ fontSize: 30 }} /></Button>
+            <Route path="/" exact render={() => <Button color="inherit"><FilterListIcon style={{ fontSize: 30 }} /></Button>} />
             <Button color="inherit"><SettingsIcon style={{ fontSize: 30 }} /></Button>
             <Button color="inherit" onClick={handleClick}><MenuIcon style={{ fontSize: 30 }} /></Button>
             <Menu

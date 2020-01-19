@@ -1,25 +1,27 @@
 import React, { useEffect } from 'react';
+import { BrowserRouter, Route } from 'react-router-dom';
 import './App.css';
 import Login from './components/login_page/login';
 import Ad from './components/ad_page/ad_page';
 import { connect } from 'react-redux';
 import { getCookie, deleteCookie } from './cookies_helper/cookies_functions';
 import { setUser } from './redux/login_reduser';
+import AddAdPageContainer from './components/add_ad_page/add_ad_page_container';
 
 let App = (props) => {
 
   let { userData, setUser } = props;
- //////////////////////////////////////// developer delete cookies button CTRL
-  document.addEventListener('keydown', function(event) {
+  //////////////////////////////////////// developer delete cookies button CTRL
+  document.addEventListener('keydown', function (event) {
     if (event.ctrlKey) {
-     deleteCookie('registered')
-     deleteCookie('user')
-     deleteCookie('idUser')
+      deleteCookie('registered')
+      deleteCookie('user')
+      deleteCookie('idUser')
     }
   });
-////////////////////////////////////////
+  ////////////////////////////////////////
   useEffect(() => {
-    if (getCookie('registered') === 'true' && userData.registered === false ) {
+    if (getCookie('registered') === 'true' && userData.registered === false) {
       let userData = {
         registered: getCookie('registered'),
         name: getCookie('user'),
@@ -30,11 +32,14 @@ let App = (props) => {
   });
 
   return (
-    <div className="App">
-      <div className="MobileWindow">
-        {userData.registered ? <Ad /> : <Login />}
+    <BrowserRouter>
+      <div className="App">
+        <div className="MobileWindow">
+        <Route path="/" exact render={() => userData.registered ? <Ad /> : <Login />} />
+        <Route path="/add-ad" render={() => <AddAdPageContainer />} />
+        </div>
       </div>
-    </div>
+    </BrowserRouter>
   );
 }
 

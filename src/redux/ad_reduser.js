@@ -1,4 +1,6 @@
-const SOME_ACTION = 'SOME_ACTION';
+const ADD_AD = 'ADD_AD';
+
+
 let initialState = [
     {
         id: 1,
@@ -65,8 +67,9 @@ let initialState = [
 
 const adReducer = (state = initialState, action) => {
     switch (action.type) {
-        case SOME_ACTION: {
-            return ;
+        case ADD_AD: {
+            console.log(state.push(action.adData));
+            return state.push(action.adData);
         }
         default: {
             return state;
@@ -75,6 +78,6 @@ const adReducer = (state = initialState, action) => {
 
 }
 
-// export let addMessage = (textMessage) => ({ type: ADD_MESSAGE, textMessage });
+export let addAd = (adData) => ({ type: ADD_AD, adData });
 
 export default adReducer;
