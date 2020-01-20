@@ -4,7 +4,6 @@ import AddAdPage from './add_ad_page';
 import dataPicker from '../../services/data_picker';
 import { addAd } from '../../redux/ad_reduser';
 import { generatorId } from '../../services/generator_id';
-import { duration } from '@material-ui/core';
 
 /////////////////// add ad page container component
 let AddAdPageContainer = ({ addAd, userData, ...props }) => {

@@ -63,8 +63,9 @@ input[type="radio"]:checked+label {
 
 .inputFile {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
+    justify-content: center;
 }
 .inputFile input[type="file"] {
 display: none;
@@ -104,4 +105,22 @@ display: none;
 .adForm button:hover {
     background-color: #4caf50;
     border-color: #4caf50;
+}
+///////////ad foto (edit_page css)
+.adFoto {
+    width: 120px;
+    height: 120px;
+    border-radius: 10px;
+    object-fit: cover;
+    margin: 20px 10px;
+}
+/////////  (edit_page css)
+.pageContainer {
+    background-color: #212121;
+    display: flex;
+    flex-direction: column;
+    padding: 0px 20px;
+    h1 {
+        font-size: 25px;
+    }
 }

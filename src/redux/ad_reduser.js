@@ -1,7 +1,21 @@
 const ADD_AD = 'ADD_AD';
+const ADD_EDIT_AD = 'ADD_EDIT_AD';
 
 
 let initialState = {
+    editAd: {},
+    myAdsData: [
+        {
+            idAd: "b948e815-f466-4f36-9dfe-79bd9488e0cd",
+            img: null,
+            description: "Продаю білєта",
+            autor: "Artyr",
+            autorId: "1ecc8331-09f2-4520-9f70-9d176072c959",
+            typeClass: "2",
+            typeText: "продаж",
+            adData: "01.20 17:35"
+        }
+    ],
     adsData: [
         {
             idAd: 1,
@@ -70,11 +84,12 @@ let initialState = {
 const adReducer = (state = initialState, action) => {
     switch (action.type) {
         case ADD_AD: {
-            let copyState = {...state};
-            copyState.adsData =[...state.adsData];
-            copyState.adsData.push(action.adData)
-            console.log(copyState)
-            return copyState;
+            state.myAdsData.push(action.adData);
+            return state;
+        }
+        case ADD_EDIT_AD: {
+            state.editAd = action.adData;
+            return state;
         }
         default: {
             return state;
@@ -84,5 +99,6 @@ const adReducer = (state = initialState, action) => {
 }
 
 export let addAd = (adData) => ({ type: ADD_AD, adData });
+export let editAd = (adData) => ({ type: ADD_EDIT_AD, adData });
 
 export default adReducer;

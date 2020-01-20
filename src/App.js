@@ -7,6 +7,8 @@ import { connect } from 'react-redux';
 import { getCookie, deleteCookie } from './services/cookies_functions';
 import { setUser } from './redux/login_reduser';
 import AddAdPageContainer from './components/add_ad_page/add_ad_page_container';
+import MyAdPageContainer from './components/my_ad_page/my_ad_page_container';
+import EditMyAdContainer from './components/edit_my_ad_page/edit_my_ad_container';
 
 let App = (props) => {
 
@@ -38,10 +40,12 @@ console.log(window.store.getState())
 
   return (
     <BrowserRouter>
-      <div className="App">
-        <div className="MobileWindow">
-        <Route path="/" exact render={() => userData.registered ? <Ad /> : <Login />} />
-        <Route path="/add-ad" render={() => <AddAdPageContainer />} />
+      <div className='App'>
+        <div className='MobileWindow'>
+        <Route path='/' exact render={() => userData.registered ? <Ad /> : <Login />} />
+        <Route path='/add-ad' render={() => <AddAdPageContainer />} />
+        <Route path='/my-ad' render={() => <MyAdPageContainer />} />
+        <Route path='/edit_my_ad' render={() => <EditMyAdContainer/>} />
         </div>
       </div>
     </BrowserRouter>

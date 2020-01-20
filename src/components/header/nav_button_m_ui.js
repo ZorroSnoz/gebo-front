@@ -1,5 +1,6 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 // material ui-----------------
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -30,7 +31,7 @@ export default function MenuButton() {
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
             >
-                <MenuItem onClick={handleClose}>Профіль</MenuItem>
+                <MenuItem onClick={handleClose}><NavLink to='/my-ad'>Мої оголошення</NavLink></MenuItem>
                 <MenuItem onClick={handleClose}>Діалоги</MenuItem>
                 <MenuItem onClick={handleClose}>FaQ</MenuItem>
             </Menu>

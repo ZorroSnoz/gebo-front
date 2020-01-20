@@ -67,3 +67,37 @@ display: flex;
 flex-direction: column;
 width: -webkit-fill-available;
 }
+
+////////// user buttons
+#userButtonBlock {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    button {
+        border-radius: 100%;
+        border: solid 2px;
+        height: 50px;
+        width: 50px;
+        margin: 10px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.5);
+        transition: 0.25s;
+        cursor: pointer;
+    }
+    .editButton {
+        background-color: #a6d4fa;
+        border-color: #a6d4fa;
+    }
+    .editButton:hover {
+        background-color: #648dae;
+        border-color: #648dae;
+    }
+    .deleteButton {
+        background-color: #f6a5c0;
+        border-color: #f6a5c0;
+    }
+    .deleteButton:hover {
+        background-color: #aa647b;
+        border-color: #aa647b;
+    }
+}
+/////
