@@ -1,7 +1,6 @@
 const ADD_AD = 'ADD_AD';
 const ADD_EDIT_AD = 'ADD_EDIT_AD';
 
-
 let initialState = {
     editAd: {},
     myAdsData: [

@@ -1,50 +1,45 @@
+/////////// ТУТ КОСТИЛЬ, КОМПОНЕНТА НЕ ЧИСТА, REDUX FORM КОНЕКТИТЬСЯ ДО СТЕЙТА
+
 import React from 'react';
 import s from '../add_ad_page/add_ad_page.module.css';
 import { Field, reduxForm } from 'redux-form';
 import peacePicture from '../../images/peace.jpg';
+import { connect } from 'react-redux';
 
-///////// edit ad component
-let EditMyAd = ({ editAdData, ...props }) => {
+///////// edit ad component 
+let EditMyAd = (props) => {
 
-    console.log(editAdData)
     return (
         <div className={s.pageContainer}>
             <h1>РЕДАГУВАТИ ОГОЛОШЕННЯ</h1>
-            <ReduxEditAdform editAdData={editAdData} />
+            <EditAdFormRedux />
         </div>
     )
 };
 /////////  edit ad form component
-let EditAdForm = ({ editAdData, ...props }) => {
-
-    let { idAd, img, description, autor, autorId, typeClass, typeText, adData } = editAdData;
-
-    let InputDescription = ({ input, meta, ...props }) => {
-        return (<input {...input} {...props} />);
-    };
+let EditAdFormRedux = (props) => {
+    const { handleSubmit, load, pristine, reset, submitting } = props;
 
     return (
-        <form className={s.adForm} onSubmit={props.handleSubmit} >
+        <form className={s.adForm} onSubmit={handleSubmit} >
             <Field
                 placeholder={'Опис оголошення*'}
                 type={'text'}
-                name={'discription'}
-                component={InputDescription} />
+                name={'description'}
+                component={'input'} />
             <h2>Категорія*</h2>
             <div className={s.radioBlock}>
                 <div>
                     <Field
-                        checked={typeClass == '0' ? 'checked' : ''}
                         id='radio1'
-                        name={'category'}
+                        name={'typeClass'}
                         type='radio'
                         value="0"
                         component={'input'} />
                     <label for='radio1'>продати/обміняти</label>
                     <Field
-                        checked={typeClass == '1' ? 'checked' : ''}
                         id='radio2'
-                        name={'category'}
+                        name={'typeClass'}
                         type='radio'
                         value="1"
                         component={'input'} />
@@ -52,17 +47,15 @@ let EditAdForm = ({ editAdData, ...props }) => {
                 </div>
                 <div>
                     <Field
-                        checked={typeClass == '2' ? 'checked' : ''}
                         id='radio3'
-                        name={'category'}
+                        name={'typeClass'}
                         type='radio'
                         value="2"
                         component={'input'} />
                     <label for='radio3'>продати</label>
                     <Field
-                        checked={typeClass == '3' ? 'checked' : ''}
                         id='radio4'
-                        name={'category'}
+                        name={'typeClass'}
                         type='radio'
                         value="3"
                         component={'input'} />
@@ -71,22 +64,14 @@ let EditAdForm = ({ editAdData, ...props }) => {
             </div>
             <div className={s.inputFile}>
                 <img className={s.adFoto} src={peacePicture} />
-                <Field id='inputFile' name={'foto'} type='file' component={'input'} />
+                <Field id='inputFile' name={'img'} type='file' component={'input'} />
                 <label for='inputFile'>ДОДАТИ ФОТО</label>
             </div>
             <button type='submit'>ЗМІНИТИ</button>
         </form>
     )
 };
-let ReduxEditAdform = reduxForm({
-    form: 'edit_ad',
-    initialValues: {
-        members: [
-            {
-                discription: "myFirstName"
-            }
-        ]
-    }
-})(EditAdForm);
-
+EditAdFormRedux = reduxForm({ form: 'edit_ad' })(EditAdFormRedux);
+EditAdFormRedux = connect(state => ({ initialValues: state.adPage.editAd }))(EditAdFormRedux)
+////////
 export default EditMyAd;
