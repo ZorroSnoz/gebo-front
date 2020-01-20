@@ -1,5 +1,6 @@
 const ADD_AD = 'ADD_AD';
 const ADD_EDIT_AD = 'ADD_EDIT_AD';
+const ADD_POST_EDIT_AD = 'ADD_POST_EDIT_AD';
 
 let initialState = {
     editAd: {},
@@ -99,5 +100,6 @@ const adReducer = (state = initialState, action) => {
 
 export let addAd = (adData) => ({ type: ADD_AD, adData });
 export let editAd = (adData) => ({ type: ADD_EDIT_AD, adData });
+// export let 
 
 export default adReducer;
