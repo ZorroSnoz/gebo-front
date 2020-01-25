@@ -1,21 +1,11 @@
 const ADD_AD = 'ADD_AD';
 const ADD_EDIT_AD = 'ADD_EDIT_AD';
 const ADD_POST_EDIT_AD = 'ADD_POST_EDIT_AD';
+const DELETE_AD = 'DELETE_AD';
 
 let initialState = {
     editAd: {},
-    myAdsData: [
-        {
-            idAd: "b948e815-f466-4f36-9dfe-79bd9488e0cd",
-            img: null,
-            description: "Продаю білєта",
-            autor: "Artyr",
-            autorId: "1ecc8331-09f2-4520-9f70-9d176072c959",
-            typeClass: "2",
-            typeText: "продаж",
-            adData: "01.20 17:35"
-        }
-    ],
+    myAdsData: [],
     adsData: [
         {
             idAd: 1,
@@ -91,6 +81,20 @@ const adReducer = (state = initialState, action) => {
             state.editAd = action.adData;
             return state;
         }
+        case ADD_POST_EDIT_AD: {
+            let newItem = state.myAdsData.filter(item => item.idAd != action.adData.idAd);
+            newItem.push(action.adData);
+            state.myAdsData = newItem;
+            return state;
+        }
+        case DELETE_AD: {
+            let newItem = state.myAdsData.filter(item => item.idAd != action.adData.idAd);
+            state.myAdsData = newItem;
+            return {
+                ...state,
+                myAdsData: newItem
+            };
+        }
         default: {
             return state;
         }
@@ -100,6 +104,7 @@ const adReducer = (state = initialState, action) => {
 
 export let addAd = (adData) => ({ type: ADD_AD, adData });
 export let editAd = (adData) => ({ type: ADD_EDIT_AD, adData });
-// export let 
+export let addEditAd = (adData) => ({ type: ADD_POST_EDIT_AD, adData });
+export let deleteAd = (adData) => ({ type: DELETE_AD, adData });
 
 export default adReducer;

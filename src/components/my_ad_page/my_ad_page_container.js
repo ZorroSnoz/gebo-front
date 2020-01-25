@@ -2,13 +2,13 @@ import React from 'react';
 import Header from '../header/header';
 import MyAdPage from './my_ad_page';
 import { connect } from 'react-redux';
-import { editAd } from '../../redux/ad_reduser';
+import { editAd, deleteAd } from '../../redux/ad_reduser';
 
-let MyAdPageContainer = ({ad, userId, editAd, ...props}) => {
+let MyAdPageContainer = ({ad, userId, editAd, deleteAd, ...props}) => {
 
 return (<>
 <Header />
-<MyAdPage ad={ad} userId={userId} editAd={editAd}/>
+<MyAdPage ad={ad} userId={userId} deleteAd={deleteAd} editAd={editAd}/>
 </>
 )};
 
@@ -19,4 +19,4 @@ let mapStateToProps = (state) => {
     }
 };
 
-export default connect(mapStateToProps, { editAd })(MyAdPageContainer);
+export default connect(mapStateToProps, { editAd, deleteAd })(MyAdPageContainer);

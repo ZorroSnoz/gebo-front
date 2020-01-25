@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import s from './add_ad_page.module.css';
 import { Field, reduxForm } from 'redux-form';
 import Header from '../header/header';
+
 
 //////////////////// add ad page component
 let AddAdPage = ({ onSubmit, ...props }) => {
     return (<>
         <Header />
         <div className={s.addAdPage} >
-
             <h1>ДОДАТИ ОГОЛОШЕННЯ</h1>
             <ReduxAddAdform onSubmit={onSubmit} />
         </div>
@@ -60,8 +60,8 @@ let AddAdForm = (props) => {
                 </div>
             </div>
             <div className={s.inputFile}>
-            <Field id='inputFile' name={'foto'} type='file' component={'input'} />
-            <label for='inputFile'>ДОДАТИ ФОТО</label>
+                <Field id='inputFile' name={'foto'} type='file' component={'input'} />
+                <label for='inputFile'>ДОДАТИ ФОТО</label>
             </div>
             <button type='submit'>ДОДАТИ ОГОЛОШЕННЯ</button>
         </form>

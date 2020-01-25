@@ -24,6 +24,7 @@
 }
 .adItem .adInfo {
   height: 80px;
+  width: 100%;
   display: flex;
   flex-direction: row;
 }
@@ -76,10 +77,11 @@
   border: solid 2px;
   height: 50px;
   width: 50px;
-  margin: 10px;
+  margin: 5px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
   transition: 0.25s;
   cursor: pointer;
+  outline: none;
 }
 #userButtonBlock .editButton {
   background-color: #a6d4fa;
