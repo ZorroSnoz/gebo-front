@@ -37,7 +37,8 @@ let AdItem = ({ item, userId, editAd, deleteAd, ...props }) => {
                             <NavLink onClick={()=>{editAd(item)}}  to='/edit_my_ad'>
                                 <button className={s.editButton}><EditIcon /></button>
                             </NavLink>
-                            <button onClick={()=>{deleteAd(item)}} className={s.deleteButton}><DeleteForeverIcon /></button>
+                            <button onClick={()=>{deleteAd(item)}} 
+                            className={s.deleteButton}><DeleteForeverIcon /></button>
                         </div>}
                 </div>
             </div>
