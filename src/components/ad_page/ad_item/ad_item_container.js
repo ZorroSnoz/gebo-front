@@ -1,9 +1,11 @@
 import React from 'react';
 import AdItem from './ad_item';
 
-let AdItemCon = ({ad, userId, editAd, deleteAd, ...props}) => {
 
-    let adItems = ad.map(item => <AdItem deleteAd={deleteAd} item={item} userId={userId} editAd={editAd} />);
+let AdItemCon = ({ads, userId, editAd, deleteAd, ...props}) => {
+
+
+    let adItems = ads.map(item => <AdItem deleteAd={deleteAd} item={item} userId={userId} editAd={editAd} />);
     return (
         <>
 {adItems}

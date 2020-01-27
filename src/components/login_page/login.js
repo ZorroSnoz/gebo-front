@@ -1,31 +1,32 @@
-import React from 'react';
+import React, { useState }  from 'react';
 import s from './login_page.module.css';
 import { Field, reduxForm } from 'redux-form';
 import logo from '../../images/gebo_logo.jpg';
-import { setUser } from '../../redux/login_reduser';
+import { addNewUserThunk } from '../../redux/login_reduser';
 import { connect } from 'react-redux';
-import { setCookie } from '../../services/cookies_functions';
 import { generatorId } from '../../services/generator_id';
+import Preloader from '../preloader/preloader';
 
 ////////////////////////////////// login page container component
-let LoginPageCon = (props) => {
+let LoginPageCon = ({addNewUserThunk, ...state}) => {
+
+  const [buttonLogin, setButton] = useState(0);
 
   let onSubmit = (formData) => {
-    let newIdUser = generatorId();
-    setCookie('user', formData.login);
-    setCookie('idUser', newIdUser);
-    setCookie('registered', true);
-    let userData = { registered: true, name: formData.login, idUser: newIdUser };
-    props.setUser(userData)
+    let userData = { registered: true, name: formData.login, idUser: generatorId() };
+    addNewUserThunk(userData);
+    setButton(1);
   }
 
   return (
     <>
-      <LoginPage onSubmit={onSubmit} />
+    {buttonLogin === 0
+    ? <LoginPage onSubmit={onSubmit} />
+    : <Preloader/>}
     </>
   );
 }
-let LoginPageContainer = connect(null, { setUser })(LoginPageCon);
+let LoginPageContainer = connect(null, { addNewUserThunk })(LoginPageCon);
 ////////////////////////////////// login page component
 let LoginPage = ({ onSubmit, ...props }) => {
   return (

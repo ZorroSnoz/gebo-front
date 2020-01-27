@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import AddAdPage from './add_ad_page';
 import dataPicker from '../../services/data_picker';
-import { addAd } from '../../redux/ad_reduser';
+import { AddAdThunk } from '../../redux/ad_reduser';
 import { generatorId } from '../../services/generator_id';
 import { Redirect } from 'react-router-dom';
 
 /////////////////// add ad page container component
-let AddAdPageContainer = ({ addAd, userData, ...props }) => {
+let AddAdPageContainer = ({ AddAdThunk, userData, ...props }) => {
     const [submit, setSubmit] = useState(0);
     let onSubmit = (formData) => {
         let categoryText = ['продаж/бартер', 'оголошення', 'продаж', 'купівля/бартер'];
@@ -22,7 +22,7 @@ let AddAdPageContainer = ({ addAd, userData, ...props }) => {
             typeText: categoryText[formData.category],
             adData: time
         }
-        addAd(addData)
+        AddAdThunk(addData)
         setSubmit(1);
     }
     if (submit == 0) {
@@ -44,4 +44,4 @@ let mapStateToProps = (state) => {
     }
 };
 
-export default connect(mapStateToProps, { addAd })(AddAdPageContainer);
+export default connect(mapStateToProps, { AddAdThunk })(AddAdPageContainer);

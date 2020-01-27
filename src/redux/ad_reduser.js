@@ -4,21 +4,23 @@ const ADD_AD = 'ADD_AD';
 const ADD_EDIT_AD = 'ADD_EDIT_AD';
 const ADD_POST_EDIT_AD = 'ADD_POST_EDIT_AD';
 const DELETE_AD = 'DELETE_AD';
+const DELETE_ALL_AD = 'DELETE_ALL_AD';
+
 const GET_ADS = 'GET_ADS';
-const LOAD_ADS = 'LOAD_ADS';
 
 let initialState = {
     editAd: {},
     myAdsData: [],
-    adsData: null,
-    loadAds: false
+    adsData: [],
 };
 
 const adReducer = (state = initialState, action) => {
     switch (action.type) {
         case ADD_AD: {
-            state.myAdsData.push(action.adData);
-            return state;
+            return {
+                ...state,
+                myAdsData: action.adData
+            };
         }
         case ADD_EDIT_AD: {
             state.editAd = action.adData;
@@ -44,10 +46,10 @@ const adReducer = (state = initialState, action) => {
                 adsData: action.adsData
             };
         }
-                case LOAD_ADS: {
+        case DELETE_ALL_AD: {
             return {
                 ...state,
-                loadAds: action.load
+                adsData: action.adData
             };
         }
         default: {
@@ -57,21 +59,35 @@ const adReducer = (state = initialState, action) => {
 
 }
 
-export let addAd = (adData) => ({ type: ADD_AD, adData });
+export let addAd = () => ({ type: ADD_AD, adData: [] });
 export let editAd = (adData) => ({ type: ADD_EDIT_AD, adData });
 export let addEditAd = (adData) => ({ type: ADD_POST_EDIT_AD, adData });
 export let deleteAd = (adData) => ({ type: DELETE_AD, adData });
-export let changeLoad = (load) => ({type: LOAD_ADS, load});
+export let deleteAllAd = () => ({ type: DELETE_ALL_AD, adData: [] })
 
-let getAds = (adsData) => ({type: GET_ADS, adsData});
+let getAds = (adsData) => ({ type: GET_ADS, adsData });
 
 export let getAdsThunk = () => {
-    return (dispatch) => {      
+    return (dispatch) => {
         apiExpress.getAds().then(response => {
             dispatch(getAds(response.data))
         })
     }
 }
 
+export let AddAdThunk = (addData) => {
+    return (dispatch) => {
+        apiExpress.addNewAd(addData).then(response => {
+
+            if (response.data == 'OK') {
+                dispatch(addAd());
+                console.log('New ad is added.')
+            }
+            else {
+                console.log('AddAdThunk error.')
+            }
+        })
+    }
+}
 
 export default adReducer;

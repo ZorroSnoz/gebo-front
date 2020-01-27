@@ -3,7 +3,7 @@ export let getCookie = (name) => {
         "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
     ));
     return matches ? decodeURIComponent(matches[1]) : undefined;
-}
+};
 
 export let setCookie = (name, value, options = {}) => {
 
@@ -25,10 +25,17 @@ export let setCookie = (name, value, options = {}) => {
     }
 
     document.cookie = updatedCookie;
-}
+};
 
 export let deleteCookie = (name) => {
     setCookie(name, "", {
       'max-age': -1
     })
-  }
+  };
+
+
+export let addCookies = (userData) => {
+    setCookie('user', userData.name);
+    setCookie('idUser', userData.idUser);
+    setCookie('registered', userData.registered);
+  };  
