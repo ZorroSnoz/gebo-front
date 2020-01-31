@@ -17,7 +17,7 @@ let EditMyAdContainer = ({ addEditAd, editAdData, ...props }) => {
             typeText: categoryText[formData.typeClass],
             adData: time
         }
-
+console.log(formData)
         addEditAd(addData);
         setSubmit(1);
     };
@@ -25,7 +25,7 @@ let EditMyAdContainer = ({ addEditAd, editAdData, ...props }) => {
     if (submit == 0) {
         return (<>
             <Header />
-            <EditMyAd onSubmit={onSubmit} />
+            <EditMyAd  onSubmit={onSubmit} />
         </>
         )
     }

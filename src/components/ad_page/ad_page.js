@@ -9,7 +9,7 @@ import Preloader from '../preloader/preloader';
 let Ad = ({ addAd, ads, login, getAdsThunk, deleteAllAd, ...props }) => {
 
     useEffect(() => {
-        getAdsThunk();
+        getAdsThunk(login.idUser);
         return () => {
             deleteAllAd()
           }

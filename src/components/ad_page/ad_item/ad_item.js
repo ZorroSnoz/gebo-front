@@ -34,10 +34,10 @@ let AdItem = ({ item, userId, editAd, deleteAd, ...props }) => {
                             </ButtonGroup>
                         </div>
                         : <div id={s.userButtonBlock}>
-                            <NavLink onClick={()=>{editAd(item)}}  to='/edit_my_ad'>
+                            <NavLink  onClick={()=>{editAd(item)}} to='/edit_my_ad'>
                                 <button className={s.editButton}><EditIcon /></button>
                             </NavLink>
-                            <button onClick={()=>{deleteAd(item)}} 
+                            <button onClick={()=>{deleteAd(item.idAd)}} 
                             className={s.deleteButton}><DeleteForeverIcon /></button>
                         </div>}
                 </div>

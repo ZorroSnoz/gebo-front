@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import s from './add_ad_page.module.css';
 import { Field, reduxForm } from 'redux-form';
 import Header from '../header/header';
@@ -16,7 +16,7 @@ let AddAdPage = ({ onSubmit, ...props }) => {
 };
 /////////////////////  add ad form conponent
 let AddAdForm = (props) => {
-
+    const [submit, setSubmit] = useState(0);
     return (
         <form className={s.adForm} onSubmit={props.handleSubmit} >
             <Field
@@ -63,7 +63,11 @@ let AddAdForm = (props) => {
                 <Field id='inputFile' name={'foto'} type='file' component={'input'} />
                 <label for='inputFile'>ДОДАТИ ФОТО</label>
             </div>
-            <button type='submit'>ДОДАТИ ОГОЛОШЕННЯ</button>
+            {submit === 0
+                ? <button type='submit' onClick={()=>{setSubmit(1)}}>ДОДАТИ ОГОЛОШЕННЯ</button>
+                : <button>Завантаження...</button>}
+
+
         </form>
     )
 };

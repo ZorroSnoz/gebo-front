@@ -1,14 +1,20 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import AddAdPage from './add_ad_page';
 import dataPicker from '../../services/data_picker';
-import { AddAdThunk } from '../../redux/ad_reduser';
+import { AddAdThunk, stopToLoad} from '../../redux/ad_reduser';
 import { generatorId } from '../../services/generator_id';
 import { Redirect } from 'react-router-dom';
 
 /////////////////// add ad page container component
-let AddAdPageContainer = ({ AddAdThunk, userData, ...props }) => {
-    const [submit, setSubmit] = useState(0);
+let AddAdPageContainer = ({ AddAdThunk, userData, load, stopToLoad, ...props }) => {
+
+    useEffect(() => {
+        return () => {
+            stopToLoad()
+        }
+    });
+
     let onSubmit = (formData) => {
         let categoryText = ['продаж/бартер', 'оголошення', 'продаж', 'купівля/бартер'];
         let time = dataPicker();
@@ -23,9 +29,8 @@ let AddAdPageContainer = ({ AddAdThunk, userData, ...props }) => {
             adData: time
         }
         AddAdThunk(addData)
-        setSubmit(1);
     }
-    if (submit == 0) {
+    if (load === false) {
         return (
             <AddAdPage onSubmit={onSubmit} />
         )
@@ -41,7 +46,8 @@ let AddAdPageContainer = ({ AddAdThunk, userData, ...props }) => {
 let mapStateToProps = (state) => {
     return {
         userData: state.loginPage,
+        load: state.adPage.adAddLoad
     }
 };
 
-export default connect(mapStateToProps, { AddAdThunk })(AddAdPageContainer);
+export default connect(mapStateToProps, { AddAdThunk, stopToLoad })(AddAdPageContainer);
