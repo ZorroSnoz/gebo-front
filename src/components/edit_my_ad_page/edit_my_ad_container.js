@@ -16,7 +16,7 @@ let EditMyAdContainer = ({ addEditAd, editAdData, ...props }) => {
             typeClass: formData.typeClass,
             typeText: categoryText[formData.typeClass],
             adData: time
-        }
+        } 
 console.log(formData)
         addEditAd(addData);
         setSubmit(1);
