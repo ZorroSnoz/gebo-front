@@ -8,7 +8,7 @@ let Header = () => {
     return (<>
         <div className={s.headerContainer}>
                 <div className={s.logoContainer}>
-                <NavLink to='/'>
+                <NavLink to='/gebo/'>
                     <img src={logo} />
                     </NavLink>
                     <h1>Gebo</h1>

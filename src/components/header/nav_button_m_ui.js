@@ -31,7 +31,7 @@ export default function MenuButton() {
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
             >
-                <MenuItem onClick={handleClose}><NavLink to='/my-ad'>Мої оголошення</NavLink></MenuItem>
+                <MenuItem onClick={handleClose}><NavLink to='/gebo/my-ad'>Мої оголошення</NavLink></MenuItem>
                 <MenuItem onClick={handleClose}>Діалоги</MenuItem>
                 <MenuItem onClick={handleClose}>FaQ</MenuItem>
             </Menu>

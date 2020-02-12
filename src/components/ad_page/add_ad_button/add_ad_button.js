@@ -6,7 +6,7 @@ import { NavLink } from 'react-router-dom';
 let AddAdButton = ({ addAd, ...props }) => {
     return (
         <div className={s.addButton}>
-            <NavLink to='/add-ad'>
+            <NavLink to='/gebo/add-ad'>
                 <button>
                     <AddIcon style={{ fontSize: 30 }} />
                 </button>

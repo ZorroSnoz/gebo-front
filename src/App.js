@@ -33,10 +33,10 @@ let App = ({ userData, setUser }) => {
     <BrowserRouter>
       <div className='App'>
         <div className='MobileWindow'>
-          <Route path='/' exact render={() => userData.registered ? <Ad /> : <Login />} />
-          <Route path='/add-ad' render={() => <AddAdPageContainer />} />
-          <Route path='/my-ad' render={() => <MyAdPageContainer />} />
-          <Route path='/edit_my_ad' render={() => <EditMyAdContainer />} />
+          <Route path='/gebo/' exact render={() => userData.registered ? <Ad /> : <Login />} />
+          <Route path='/gebo/add-ad' render={() => <AddAdPageContainer />} />
+          <Route path='/gebo/my-ad' render={() => <MyAdPageContainer />} />
+          <Route path='/gebo/edit_my_ad' render={() => <EditMyAdContainer />} />
         </div>
       </div>
     </BrowserRouter>
