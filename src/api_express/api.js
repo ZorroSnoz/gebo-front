@@ -1,6 +1,6 @@
 import * as axios from 'axios';
 
-const instance = axios.create({ baseURL: 'http://localhost:2000/' });
+const instance = axios.create({ baseURL: 'https://gebo-app.herokuapp.com/' });
 
 const apiExpress = {
   getAds(userId) {
