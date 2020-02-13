@@ -37,7 +37,7 @@ let AddAdPageContainer = ({ AddAdThunk, userData, load, stopToLoad, ...props }) 
     }
     else {
         return (
-            <Redirect to='/my-ad' />
+            <Redirect to='/gebo/my-ad' />
         )
     }
 
