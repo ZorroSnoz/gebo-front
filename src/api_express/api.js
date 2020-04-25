@@ -1,6 +1,6 @@
 import * as axios from 'axios';
 
-const instance = axios.create({ baseURL: 'https://gebo-app.herokuapp.com/' });
+const instance = axios.create({ baseURL: 'http://localhost:2000/' });
 
 const apiExpress = {
   getAds(userId) {
@@ -13,6 +13,7 @@ const apiExpress = {
     return instance.get(`delete-ad/${adId}`)
   },
   addNewUser(userData) {
+    console.log(userData)
     return instance.put(`add-new-user`, { userData: userData })
   },
   addNewAd(adData) {
