@@ -11,14 +11,21 @@ const STOP_TO_LOAD = 'STOP_TO_LOAD';
 const GET_ADS = 'GET_ADS';
 const GET_MY_ADS = 'GET_MY_ADS';
 
-let initialState = {
+export type InitialStateType = {
+    editAd: any
+    myAdsData: any
+    adsData: any
+    adAddLoad: boolean
+}
+
+let initialState: InitialStateType = {
     editAd: {},
     myAdsData: [],
     adsData: [],
     adAddLoad: false
 };
 
-const adReducer = (state = initialState, action) => {
+const adReducer = (state: InitialStateType = initialState, action: any): InitialStateType => {
     switch (action.type) {
         case ADD_AD: {
             return {
@@ -32,13 +39,13 @@ const adReducer = (state = initialState, action) => {
             return state;
         }
         case ADD_POST_EDIT_AD: {
-            let newItem = state.myAdsData.filter(item => item.idAd != action.adData.idAd);
+            let newItem = state.myAdsData.filter((item: any) => item.idAd != action.adData.idAd);
             newItem.push(action.adData);
             state.myAdsData = newItem;
             return state;
         }
         case DELETE_AD: {
-            let newItem = state.myAdsData.filter(item => item.idAd != action.adId);
+            let newItem = state.myAdsData.filter((item: any) => item.idAd != action.adId);
 
             if (newItem.length === 0) {
                 newItem = false
@@ -86,64 +93,53 @@ const adReducer = (state = initialState, action) => {
 }
 
 export let addAd = () => ({ type: ADD_AD, adData: [] });
-export let editAd = (adData) => ({ type: ADD_EDIT_AD, adData });
-export let addEditAd = (adData) => ({ type: ADD_POST_EDIT_AD, adData });
-export let deleteAd = (adId) => ({ type: DELETE_AD, adId });
+export let editAd = (adData: any) => ({ type: ADD_EDIT_AD, adData });
+export let addEditAd = (adData: any) => ({ type: ADD_POST_EDIT_AD, adData });
+export let deleteAd = (adId: any) => ({ type: DELETE_AD, adId });
 export let deleteAllAd = () => ({ type: DELETE_ALL_AD, adData: [] })
 export let deleteMyAd = () => ({ type: DELETE_MY_AD, adData: [] })
 export let stopToLoad = () => ({ type: STOP_TO_LOAD })
 
-let getAds = (adsData) => ({ type: GET_ADS, adsData });
-let getMyAds = (adsData) => ({ type: GET_MY_ADS, adsData });
+let getAds = (adsData: any) => ({ type: GET_ADS, adsData });
+let getMyAds = (adsData: any) => ({ type: GET_MY_ADS, adsData });
 
-export let getAdsThunk = (userId) => {
-    return (dispatch) => {
-        apiExpress.getAds(userId).then(response => {
-            dispatch(getAds(response.data))
-        })
-    }
+export let getAdsThunk = (userId: string) => async (dispatch: any) => {
+    let response = await apiExpress.getAds(userId);
+    dispatch(getAds(response.data));
 }
-export let getMyAdsThunk = (userId) => {
-    return (dispatch) => {
-        apiExpress.getMyAds(userId).then(response => {
-            if (response.data.length === 0) {
-                dispatch(getMyAds(false))
-            }
-            else {
-                dispatch(getMyAds(response.data))
-            }
 
-        })
+export let getMyAdsThunk = (userId: string) => async (dispatch: any) => {
+    let response = await apiExpress.getMyAds(userId);
+
+    if (response.data.length === 0) {
+        dispatch(getMyAds(false))
+    }
+    else {
+        dispatch(getMyAds(response.data))
     }
 }
 
-export let deleteMyAdThunk = (adId) => {
-    return (dispatch) => {
-        apiExpress.deleteAd(adId).then(response => {
+export let deleteMyAdThunk = (adId: string) => async (dispatch: any) => {
+    let response: any = await apiExpress.deleteAd(adId);
 
-            if (response.data == 'OK') {
-                dispatch(deleteAd(adId));
-                console.log('Ad to delete.')
-            }
-            else {
-                console.log('DeleteMyAdThunk error.')
-            }
-        })
+    if (response.data == 'OK') {
+        dispatch(deleteAd(adId));
+        console.log('Ad to delete.')
+    }
+    else {
+        console.log('DeleteMyAdThunk error.')
     }
 }
 
-export let AddAdThunk = (addData) => {
-    return (dispatch) => {
-        apiExpress.addNewAd(addData).then(response => {
+export let AddAdThunk = (addData : any) => async (dispatch: any) => {
+    let response: any = await apiExpress.addNewAd(addData);
 
-            if (response.data == 'OK') {
-                dispatch(addAd());
-                console.log('New ad is added.')
-            }
-            else {
-                console.log('AddAdThunk error.')
-            }
-        })
+    if (response.data == 'OK') {
+        dispatch(addAd());
+        console.log('New ad is added.')
+    }
+    else {
+        console.log('AddAdThunk error.')
     }
 }
 

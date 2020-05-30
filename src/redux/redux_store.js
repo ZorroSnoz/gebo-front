@@ -4,7 +4,7 @@ import loginReduser from './login_reduser';
 import adReduser from './ad_reduser';
 import thunkMiddleware from "redux-thunk";
 
-let redusers = combineReducers(
+let redusers  = combineReducers(
     {
         loginPage: loginReduser,
         adPage: adReduser,
@@ -13,5 +13,4 @@ let redusers = combineReducers(
 
 const store = createStore(redusers, applyMiddleware(thunkMiddleware));
 
-window.store = store;
 export default store;
