@@ -94,7 +94,10 @@ const adReducer = (state: InitialStateType = initialState, action: any): Initial
 
 export let addAd = () => ({ type: ADD_AD, adData: [] });
 export let editAd = (adData: any) => ({ type: ADD_EDIT_AD, adData });
+
+//need added thunk for sync to backend
 export let addEditAd = (adData: any) => ({ type: ADD_POST_EDIT_AD, adData });
+//
 export let deleteAd = (adId: any) => ({ type: DELETE_AD, adId });
 export let deleteAllAd = () => ({ type: DELETE_ALL_AD, adData: [] })
 export let deleteMyAd = () => ({ type: DELETE_MY_AD, adData: [] })
