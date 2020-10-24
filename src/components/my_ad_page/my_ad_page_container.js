@@ -3,7 +3,7 @@ import Header from '../header/header';
 import MyAdPage from './my_ad_page';
 import { connect } from 'react-redux';
 import { editAd, deleteMyAdThunk, getMyAdsThunk, deleteMyAd } from '../../redux/ad_reduser';
-import Preloader from '../preloader/preloader';
+import Preloader from '../preloader/preloader.jsx';
 import AddAdButton from '../ad_page/add_ad_button/add_ad_button';
 import NoMyAd from './when_no_ad';
 
@@ -15,13 +15,12 @@ let MyAdPageContainer = ({ ads, userId, editAd, deleteMyAdThunk, getMyAdsThunk, 
             deleteMyAd()
         }
     }, []);
-
     return (<>
         <Header />
         <AddAdButton />
-        {(ads.length === 0)
+        {(ads.myAdsData.length === 0 && ads.userHaveAds === true)
             ? <Preloader />
-            : (ads === false)
+            : (ads.userHaveAds === false)
                 ? <NoMyAd/>
                 : <MyAdPage ads={ads} userId={userId} deleteAd={deleteMyAdThunk} editAd={editAd} />}
 
@@ -31,7 +30,7 @@ let MyAdPageContainer = ({ ads, userId, editAd, deleteMyAdThunk, getMyAdsThunk, 
 
 let mapStateToProps = (state) => {
     return {
-        ads: state.adPage.myAdsData,
+        ads: state.adPage.myAdsInfo,
         userId: state.loginPage.idUser
     }
 };

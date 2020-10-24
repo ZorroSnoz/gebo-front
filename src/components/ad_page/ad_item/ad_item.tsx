@@ -1,14 +1,22 @@
-import React from 'react';
+import React, {FC} from 'react';
 import s from './ad_item.module.css';
 import { NavLink } from 'react-router-dom';
+import peacePicture from '../../../images/peace.jpg';
 import Button from '@material-ui/core/Button';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
-import peacePicture from '../../../images/peace.jpg';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 
-let AdItem = ({ item, userId, editAd, deleteAd, ...props }) => {
+
+type PropsType = {
+    item: any
+    userId: string
+    editAd: any
+    deleteAd: (adId: string) => object
+}
+
+let AdItem: FC<PropsType> = ({ item, userId, editAd, deleteAd}) => {
 
     let { idAd, img, description, autor, autorId, typeClass, typeText, adData } = item;
     let typeClassName = [s.typeAd1, s.typeAd2, s.typeAd3, s.typeAd4]

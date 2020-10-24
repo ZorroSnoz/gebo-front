@@ -6,7 +6,7 @@ let MyAdPage = ({ads, userId, editAd, deleteAd, ...props}) => {
 
 return (
 <div className={s.pageContainer}>
-    <AdItemContainer ads={ads} deleteAd={deleteAd} userId={userId} editAd={editAd} />
+    <AdItemContainer ads={ads.myAdsData} deleteAd={deleteAd} userId={userId} editAd={editAd} />
 </div>
 )};
 

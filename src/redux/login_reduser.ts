@@ -1,22 +1,23 @@
-import apiExpress from '../api_express/api';
-import { addCookies } from '../services/cookies_functions';
+import apiExpress from '../api_express/api'
+import { addCookies } from '../services/cookies_functions'
 
-const SET_AUTH_USER_DATA = 'SET_AUTH_USER_DATA';
+///////////// Const for actioncreators
+const SET_AUTH_USER_DATA = 'SET_AUTH_USER_DATA'
 
-
-export type InitialStateType = {
+///////////// Initial state
+type InitialStateTypeAndUserData = {
     registered: boolean
     name: null | string
     idUser: null | string
 }
-
-let initialState: InitialStateType = {
+let initialState: InitialStateTypeAndUserData = {
     registered: false,
     name: null,
     idUser: null
 };
 
-const loginReduser = (state = initialState, action: any): InitialStateType => {
+///////////// Reduser
+const loginReduser = (state = initialState, action: SetUser_ActionType): InitialStateTypeAndUserData => {
     switch (action.type) {
         case SET_AUTH_USER_DATA: {
             return {
@@ -30,28 +31,30 @@ const loginReduser = (state = initialState, action: any): InitialStateType => {
 
 }
 
-export type SetUserActionType = {
+///////////// Actioncreators
+type SetUser_ActionType = {
     type: typeof SET_AUTH_USER_DATA
-    userData: object
+    userData: InitialStateTypeAndUserData
 }
-
-export let setUser = (userData: object): SetUserActionType => ({
+export let setUser = (userData: InitialStateTypeAndUserData): SetUser_ActionType => ({
     type: SET_AUTH_USER_DATA,
     userData: userData
-});
+})
 
-export let addNewUserThunk = (userData: object) => async (dispatch: any) => {
+///////////// Thanks
+//:todo need fin any type in dispatch
+export let addNewUserThunk = (userData: InitialStateTypeAndUserData) => async (dispatch: any) => {
     let response = await apiExpress.addNewUser(userData);
 
     if (response.data == 'OK') {
         addCookies(userData);
-        dispatch(setUser(userData));
-        console.log('New user is added.');
+        dispatch(setUser(userData))
+        console.log('New user is added.')
     }
     else {
         console.log('addNewUserThunk error.')
     }
 }
+/////////////
 
-
-export default loginReduser;
+export default loginReduser

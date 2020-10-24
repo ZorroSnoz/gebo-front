@@ -5,7 +5,7 @@ import logo from '../../images/gebo_logo.jpg';
 import { addNewUserThunk } from '../../redux/login_reduser';
 import { connect } from 'react-redux';
 import { generatorId } from '../../services/generator_id';
-import Preloader from '../preloader/preloader';
+import Preloader from '../preloader/preloader.jsx';
 
 ////////////////////////////////// login page container component
 let LoginPageCon = ({addNewUserThunk, ...state}) => {
