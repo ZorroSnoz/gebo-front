@@ -1,5 +1,7 @@
 import apiExpress from '../api_express/api';
 import {AdDataType, MyAdsInfo} from "../types/types";
+import dataPicker from "../services/data_picker";
+import {generatorId} from "../services/generator_id";
 
 ///////////// Const for actioncreators
 const ADD_AD = 'ADD_AD';
@@ -123,7 +125,7 @@ type AddAd_ActionType = {
 }
 export let addAd = ():AddAd_ActionType => ({ type: ADD_AD, adData: [] });
 
-type EditAd_ActionType = {
+export type EditAd_ActionType = {
     type: typeof ADD_EDIT_AD
     adData: AdDataType
 }
@@ -136,7 +138,7 @@ type AdData_ActionType = {
 // :todo need added thunk for sync to backend
 export let addEditAd = (adData: AdDataType):AdData_ActionType => ({ type: ADD_POST_EDIT_AD, adData })
 
-type DeleteAd_ActionType = {
+export type DeleteAd_ActionType = {
     type: typeof DELETE_AD
     adId: string
 }
@@ -200,7 +202,21 @@ export let deleteMyAdThunk = (adId: string) => async (dispatch: any) => {
     }
 }
 
-export let AddAdThunk = (addData : any) => async (dispatch: any) => {
+// :todo need fix any types in thank
+export let AddAdThunk = (formData : any, userData: any) => async (dispatch: any) => {
+
+    let categoryText: Array<string> = ['продаж/бартер', 'оголошення', 'продаж', 'купівля/бартер'];
+    let time: string = dataPicker();
+    let addData: AdDataType = {
+        idAd: generatorId(),
+        img: formData.adFoto = null,
+        description: formData.discription,
+        autor: userData.name,
+        autorId: userData.idUser,
+        typeClass: formData.category,
+        typeText: categoryText[formData.category],
+        adData: time
+    }
     let response: any = await apiExpress.addNewAd(addData);
 
     if (response.data == 'OK') {

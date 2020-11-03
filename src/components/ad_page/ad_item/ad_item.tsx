@@ -1,37 +1,54 @@
 import React, {FC} from 'react';
 import s from './ad_item.module.css';
 import { NavLink } from 'react-router-dom';
-import peacePicture from '../../../images/peace.jpg';
+import plugPicture from '../../../images/peace.jpg';
 import Button from '@material-ui/core/Button';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
-
+import {AdDataType} from "../../../types/types";
 
 type PropsType = {
-    item: any
-    userId: string
-    editAd: any
-    deleteAd: (adId: string) => object
+    item: AdDataType
+    userId: string | null
+
+    // :todo not sure maybe need added types for functions
+    editAd?: (item: AdDataType) => void
+    deleteAd?: (idItem: string) => void
 }
 
 let AdItem: FC<PropsType> = ({ item, userId, editAd, deleteAd}) => {
 
-    let { idAd, img, description, autor, autorId, typeClass, typeText, adData } = item;
-    let typeClassName = [s.typeAd1, s.typeAd2, s.typeAd3, s.typeAd4]
+    // data destructuring
+    let { idAd, img, description, autor, autorId, typeClass, typeText, adData }: AdDataType = item;
+    let typeClassName: Array<string> = [s.typeAd1, s.typeAd2, s.typeAd3, s.typeAd4]
  
-    return (
-        <div className={s.adItem}>
+    return <div className={s.adItem}>
             <div>
-                <img src={img != null ? img : peacePicture} />
+                {/*if no image paste plugPicture*/}
+                <img src={img != null ? img : plugPicture} />
             </div>
             <div>
                 <div className={s.adDescript}><p>{description}</p></div>
                 <div className={s.adInfo}>
                     <div className={s.adAutor}><p>{autor}</p><p className={s.typeAd + ' ' + typeClassName[typeClass]}>{typeText}</p><p className={s.dataAd}>{adData}</p></div>
-                    {userId != autorId
-                        ? <div>
+                    {/*if userId === autorId show buttongroup for manage ad*/}
+                    {userId === autorId
+                        ? <div id={s.userButtonBlock}>
+                            <NavLink  onClick={()=>{
+                                if (editAd) {
+                                    editAd(item)
+                                }}} to='/edit_my_ad'>
+                                <button className={s.editButton}><EditIcon /></button>
+                            </NavLink>
+                            <button onClick={()=>{
+                                if (deleteAd) {
+                                    deleteAd(item.idAd)
+                                }}}
+                                    className={s.deleteButton}><DeleteForeverIcon /></button>
+                        </div>
+                        : <div>
                             <ButtonGroup
                                 orientation="vertical"
                                 color="inherit"
@@ -40,18 +57,12 @@ let AdItem: FC<PropsType> = ({ item, userId, editAd, deleteAd}) => {
                                 <Button>Написати</Button>
                                 <Button><MoreHorizIcon /></Button>
                             </ButtonGroup>
-                        </div>
-                        : <div id={s.userButtonBlock}>
-                            <NavLink  onClick={()=>{editAd(item)}} to='/edit_my_ad'>
-                                <button className={s.editButton}><EditIcon /></button>
-                            </NavLink>
-                            <button onClick={()=>{deleteAd(item.idAd)}} 
-                            className={s.deleteButton}><DeleteForeverIcon /></button>
                         </div>}
                 </div>
             </div>
         </div>
-    );
 };
 
 export default AdItem;
+
+

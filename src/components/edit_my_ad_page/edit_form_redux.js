@@ -4,6 +4,7 @@ import peacePicture from '../../images/peace.jpg';
 import { connect } from 'react-redux';
 import s from '../add_ad_page/add_ad_page.module.css';
 
+// :todo need added TS for redux-form component
 let EditAdFormRedux = (props) => {
     const { handleSubmit } = props;
 

@@ -3,7 +3,7 @@ import s from './add_ad_page.module.css';
 import { Field, reduxForm } from 'redux-form';
 import Header from '../header/header';
 
-
+// :todo need added TS for redux-form component
 //////////////////// add ad page component
 let AddAdPage = ({ onSubmit, ...props }) => {
     return (<>

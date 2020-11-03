@@ -1,11 +1,12 @@
-import React from 'react';
-import s from './header.module.css';
-import logo from '../../images/gebo_logo.jpg';
-import MenuButton from './nav_button_m_ui';
-import { NavLink } from 'react-router-dom';
+import React, {FC} from 'react'
+import s from './header.module.css'
+import logo from '../../images/gebo_logo.jpg'
+import MenuButton from './nav_button_m_ui'
+import { NavLink } from 'react-router-dom'
 
-let Header = () => {
-    return (<>
+///////////// Header app component
+let Header: FC = () => {
+    return <>
         <div className={s.headerContainer}>
                 <div className={s.logoContainer}>
                 <NavLink to='/'>
@@ -17,8 +18,8 @@ let Header = () => {
                 <MenuButton />
             </div>
         </div>
-        <div className={s.headerFixedBlock}></div>
-    </>);
-};
+        <div className={s.headerFixedBlock}/>
+    </>
+}
 
-export default Header;
+export default Header

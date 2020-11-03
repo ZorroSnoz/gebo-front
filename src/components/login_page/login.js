@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import { generatorId } from '../../services/generator_id';
 import Preloader from '../preloader/preloader.jsx';
 
+// :todo fix redux-form for TS
 ////////////////////////////////// login page container component
 let LoginPageCon = ({addNewUserThunk, ...state}) => {
 

@@ -1,13 +1,21 @@
-import React from 'react';
-import s from './my_ad_page.module.css';
-import AdItemContainer from '../ad_page/ad_item/ad_item_container';
+import React from 'react'
+import s from './my_ad_page.module.css'
+import AdItemContainer from '../ad_page/ad_item/ad_item_container'
+// import {AdDataType, InitialStateAndUserDataType} from "../../types/types";
 
-let MyAdPage = ({ads, userId, editAd, deleteAd, ...props}) => {
+///////////// types for props
+// type PropsType = {
+//
+// }
+
+
+///////////// my ad page component
+let MyAdPage = ({ads, userId, editAd, deleteAd}) => {
 
 return (
 <div className={s.pageContainer}>
     <AdItemContainer ads={ads.myAdsData} deleteAd={deleteAd} userId={userId} editAd={editAd} />
 </div>
-)};
+)}
 
-export default MyAdPage;
+export default MyAdPage

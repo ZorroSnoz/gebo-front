@@ -1,23 +1,19 @@
 import apiExpress from '../api_express/api'
 import { addCookies } from '../services/cookies_functions'
+import {InitialStateAndUserDataType} from "../types/types";
 
 ///////////// Const for actioncreators
 const SET_AUTH_USER_DATA = 'SET_AUTH_USER_DATA'
 
 ///////////// Initial state
-type InitialStateTypeAndUserData = {
-    registered: boolean
-    name: null | string
-    idUser: null | string
-}
-let initialState: InitialStateTypeAndUserData = {
+let initialState: InitialStateAndUserDataType = {
     registered: false,
     name: null,
     idUser: null
 };
 
 ///////////// Reduser
-const loginReduser = (state = initialState, action: SetUser_ActionType): InitialStateTypeAndUserData => {
+const loginReduser = (state = initialState, action: SetUser_ActionType): InitialStateAndUserDataType => {
     switch (action.type) {
         case SET_AUTH_USER_DATA: {
             return {
@@ -34,16 +30,16 @@ const loginReduser = (state = initialState, action: SetUser_ActionType): Initial
 ///////////// Actioncreators
 type SetUser_ActionType = {
     type: typeof SET_AUTH_USER_DATA
-    userData: InitialStateTypeAndUserData
+    userData: InitialStateAndUserDataType
 }
-export let setUser = (userData: InitialStateTypeAndUserData): SetUser_ActionType => ({
+export let setUser = (userData: InitialStateAndUserDataType): SetUser_ActionType => ({
     type: SET_AUTH_USER_DATA,
     userData: userData
 })
 
 ///////////// Thanks
 //:todo need fin any type in dispatch
-export let addNewUserThunk = (userData: InitialStateTypeAndUserData) => async (dispatch: any) => {
+export let addNewUserThunk = (userData: InitialStateAndUserDataType) => async (dispatch: any) => {
     let response = await apiExpress.addNewUser(userData);
 
     if (response.data == 'OK') {
