@@ -5,7 +5,7 @@ import logo from '../../images/gebo_logo.jpg';
 import { addNewUserThunk } from '../../redux/login_reduser';
 import { connect } from 'react-redux';
 import { generatorId } from '../../services/generator_id';
-import Preloader from '../preloader/preloader.jsx';
+import Preloader from '../preloader/preloader';
 
 // :todo fix redux-form for TS
 ////////////////////////////////// login page container component

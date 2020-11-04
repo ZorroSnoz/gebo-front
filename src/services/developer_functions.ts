@@ -1,16 +1,17 @@
-import { deleteCookie } from './cookies_functions';
+import { deleteCookie } from './cookies_functions'
 
-export let developerFun = () => {
+export let developerFun = (): void => {
     document.addEventListener('keydown', function (event) {
         if (event.ctrlKey) {
           deleteCookie('registered')
           deleteCookie('user')
           deleteCookie('idUser')
         }
-      });
+      })
       document.addEventListener('keydown', function (event) {
         if (event.altKey) {
-    console.log(window.store.getState())
+    // @ts-ignore
+            console.log(window.store.getState())
         }
-      });
-};
+      })
+}

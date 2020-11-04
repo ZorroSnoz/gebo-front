@@ -1,5 +1,5 @@
 import apiExpress from '../api_express/api';
-import {AdDataType, MyAdsInfo} from "../types/types";
+import {AdDataType, AdsInfo} from "../types/types";
 import dataPicker from "../services/data_picker";
 import {generatorId} from "../services/generator_id";
 
@@ -18,17 +18,20 @@ const GET_MY_ADS = 'GET_MY_ADS';
 // :todo need remove any in InitialStateType
 type InitialStateType = {
     editAd: any
-    myAdsInfo: MyAdsInfo
-    adsData: Array<AdDataType>
+    myAdsInfo: AdsInfo
+    adsInfo: AdsInfo
     adAddLoad: boolean
 }
 let initialState: InitialStateType = {
     editAd: {},
     myAdsInfo: {
-        userHaveAds: true,
-        myAdsData: []
+        haveAds: true,
+        adsData: []
     },
-    adsData: [],
+    adsInfo: {
+        haveAds: true,
+        adsData: []
+    },
     adAddLoad: false
 };
 
@@ -36,9 +39,9 @@ let initialState: InitialStateType = {
 const adReducer = (state: InitialStateType = initialState, action: any): InitialStateType => {
     switch (action.type) {
         case ADD_AD: {
-            let myAdsInfo: MyAdsInfo = {
-                userHaveAds: true,
-                myAdsData: action.adData
+            let myAdsInfo: AdsInfo = {
+                haveAds: true,
+                adsData: action.adData
             }
             return {
                 ...state,
@@ -51,21 +54,21 @@ const adReducer = (state: InitialStateType = initialState, action: any): Initial
             return state;
         }
         case ADD_POST_EDIT_AD: {
-            let newItem = state.myAdsInfo.myAdsData.filter((item: any) => item.idAd != action.adData.idAd);
+            let newItem = state.myAdsInfo.adsData.filter((item: any) => item.idAd != action.adData.idAd);
             newItem.push(action.adData);
-            state.myAdsInfo.myAdsData = newItem;
+            state.myAdsInfo.adsData = newItem;
             return state;
         }
         case DELETE_AD: {
-            let newItem = state.myAdsInfo.myAdsData.filter((item: any) => item.idAd != action.adId);
+            let newItem = state.myAdsInfo.adsData.filter((item: any) => item.idAd != action.adId);
 
-            let myAdsInfo: MyAdsInfo = {
-                userHaveAds: true,
-                myAdsData: newItem
+            let myAdsInfo: AdsInfo = {
+                haveAds: true,
+                adsData: newItem
             }
 
             if (newItem.length === 0) {
-                myAdsInfo.userHaveAds = false
+                myAdsInfo.haveAds = false
             }
 
             return {
@@ -74,15 +77,20 @@ const adReducer = (state: InitialStateType = initialState, action: any): Initial
             };
         }
         case GET_ADS: {
+            let adsInfo: AdsInfo = {
+                ...state.adsInfo,
+                adsData: action.adsData
+            }
+
             return {
                 ...state,
-                adsData: action.adsData
+                adsInfo: adsInfo
             };
         }
         case GET_MY_ADS: {
-            let myAdsInfo: MyAdsInfo = {
-                myAdsData: action.myAdsInfo.myAdsData,
-                userHaveAds: action.myAdsInfo.userHaveAds
+            let myAdsInfo: AdsInfo = {
+                adsData: action.myAdsInfo.adsData,
+                haveAds: action.myAdsInfo.haveAds
             }
             return {
                 ...state,
@@ -90,15 +98,21 @@ const adReducer = (state: InitialStateType = initialState, action: any): Initial
             };
         }
         case DELETE_ALL_AD: {
+
+            let adsInfo: AdsInfo = {
+                ...state.adsInfo,
+                adsData: action.adsData
+            }
+
             return {
                 ...state,
-                adsData: action.adData
+                adsInfo: adsInfo
             };
         }
         case DELETE_MY_AD: {
-            let myAdsInfo: MyAdsInfo = {
+            let myAdsInfo: AdsInfo = {
                 ...state.myAdsInfo,
-                myAdsData: action.adData
+                adsData: action.adData
             }
             return {
                 ...state,
@@ -146,9 +160,9 @@ export let deleteAd = (adId: string):DeleteAd_ActionType => ({ type: DELETE_AD, 
 
 type DeleteAllAd_ActionType = {
     type: typeof DELETE_ALL_AD
-    adData: object
+    adsData: object
 }
-export let deleteAllAd = ():DeleteAllAd_ActionType => ({ type: DELETE_ALL_AD, adData: [] })
+export let deleteAllAd = ():DeleteAllAd_ActionType => ({ type: DELETE_ALL_AD, adsData: [] })
 
 type DeleteMyAd_ActionType = {
     type: typeof DELETE_MY_AD
@@ -169,13 +183,14 @@ let getAds = (adsData: Array<AdDataType>):GetAds_ActionType => ({ type: GET_ADS,
 
 type GetMyAds_ActionType = {
     type: typeof GET_MY_ADS
-    myAdsInfo: MyAdsInfo
+    myAdsInfo: AdsInfo
 }
-let getMyAds = (myAdsInfo: MyAdsInfo):GetMyAds_ActionType => ({ type: GET_MY_ADS, myAdsInfo })
+let getMyAds = (myAdsInfo: AdsInfo):GetMyAds_ActionType => ({ type: GET_MY_ADS, myAdsInfo })
 
 ///////////// Thanks
 export let getAdsThunk = (userId: string) => async (dispatch: any) => {
     let response = await apiExpress.getAds(userId);
+    // console.log(response.data)
     dispatch(getAds(response.data));
 }
 
@@ -183,10 +198,10 @@ export let getMyAdsThunk = (userId: string) => async (dispatch: any) => {
     let response = await apiExpress.getMyAds(userId);
 
     if (response.data.length === 0) {
-        dispatch(getMyAds({userHaveAds: false, myAdsData: []}))
+        dispatch(getMyAds({haveAds: false, adsData: []}))
     }
     else {
-        dispatch(getMyAds({userHaveAds: true, myAdsData: response.data}))
+        dispatch(getMyAds({haveAds: true, adsData: response.data}))
     }
 }
 

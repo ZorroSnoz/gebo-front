@@ -11,9 +11,9 @@ export type AdDataType = {
     _id?: string
 }
 
-export type MyAdsInfo = {
-    userHaveAds: boolean
-    myAdsData: Array<AdDataType>
+export type AdsInfo = {
+    haveAds: boolean
+    adsData: Array<AdDataType>
 }
 
 
