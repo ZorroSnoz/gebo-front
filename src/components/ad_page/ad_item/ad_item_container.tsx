@@ -1,11 +1,8 @@
 import React, {FC} from 'react'
 import AdItem from './ad_item'
-import {AdDataType} from "../../../types/types"
+import {AdDataType} from '../../../types/types'
 
-// type AdsInfoType = {
-//     userHaveAds: boolean
-//
-// }
+///////////// types for props
 type PropsType = {
     ads: Array<AdDataType>
     userId: string | null
@@ -15,6 +12,7 @@ type PropsType = {
     deleteAd?: (idItem: string) => void
 }
 
+///////////// ads array container component
 let AdItemCon: FC<PropsType> = ({ads, userId, editAd, deleteAd}) => {
 
     // using maping method for create array with ads
@@ -25,6 +23,5 @@ let AdItemCon: FC<PropsType> = ({ads, userId, editAd, deleteAd}) => {
            </>
 
 }
-
 
 export default AdItemCon

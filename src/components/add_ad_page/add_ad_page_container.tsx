@@ -1,5 +1,5 @@
 import React, {FC, useEffect} from 'react'
-import { connect } from 'react-redux'
+import { connect, ConnectedProps } from 'react-redux'
 import AddAdPage from './add_ad_page'
 import { AddAdThunk, stopToLoad} from '../../redux/ad_reduser'
 import { Redirect } from 'react-router-dom'
@@ -7,13 +7,13 @@ import {InitialStateAndUserDataType} from "../../types/types"
 import {AppStateType} from "../../redux/redux_store"
 
 ///////////// types for props
-type PropsType = {
+type PropsType = PropsFromRedux
+// types takes from connect() where added mapStateToProps and mapDispatchToProps
+type PropsFromRedux = ConnectedProps<typeof connector>
+// type for mapStateToProps
+type MapStatePropsType = {
     userData: InitialStateAndUserDataType
     loaded: boolean
-
-    // :todo not sure maybe need added types for functions
-    AddAdThunk: (formData: any, userData: InitialStateAndUserDataType) => void
-    stopToLoad: () => void
 }
 
 ///////////// add ad page container component
@@ -40,11 +40,14 @@ let AddAdPageContainer: FC<PropsType> = ({ AddAdThunk, userData, loaded, stopToL
 }
 
 ///////////// create props for AddAdPageContainer component
-let mapStateToProps = (state: AppStateType) => {
+let mapStateToProps = (state: AppStateType): MapStatePropsType => {
     return {
         userData: state.loginPage,
         loaded: state.adPage.adAddLoad
     }
 }
 
-export default connect(mapStateToProps, { AddAdThunk, stopToLoad })(AddAdPageContainer)
+// function for takes type from connect()
+const connector = connect(mapStateToProps, { AddAdThunk, stopToLoad })
+
+export default connector(AddAdPageContainer)

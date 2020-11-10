@@ -1,18 +1,18 @@
-import apiExpress from '../api_express/api';
-import {AdDataType, AdsInfo} from "../types/types";
-import dataPicker from "../services/data_picker";
-import {generatorId} from "../services/generator_id";
+import apiExpress from '../api_express/api'
+import {AdDataType, AdsInfo} from '../types/types'
+import dataPicker from '../services/data_picker'
+import {generatorId} from '../services/generator_id'
 
 ///////////// Const for actioncreators
-const ADD_AD = 'ADD_AD';
-const ADD_EDIT_AD = 'ADD_EDIT_AD';
-const ADD_POST_EDIT_AD = 'ADD_POST_EDIT_AD';
-const DELETE_AD = 'DELETE_AD';
-const DELETE_ALL_AD = 'DELETE_ALL_AD';
-const DELETE_MY_AD = 'DELETE_MY_AD';
-const STOP_TO_LOAD = 'STOP_TO_LOAD';
-const GET_ADS = 'GET_ADS';
-const GET_MY_ADS = 'GET_MY_ADS';
+const ADD_AD = 'ADD_AD'
+const ADD_EDIT_AD = 'ADD_EDIT_AD'
+const ADD_POST_EDIT_AD = 'ADD_POST_EDIT_AD'
+const DELETE_AD = 'DELETE_AD'
+const DELETE_ALL_AD = 'DELETE_ALL_AD'
+const DELETE_MY_AD = 'DELETE_MY_AD'
+const STOP_TO_LOAD = 'STOP_TO_LOAD'
+const GET_ADS = 'GET_ADS'
+const GET_MY_ADS = 'GET_MY_ADS'
 
 ///////////// Initial state
 // :todo need remove any in InitialStateType
@@ -33,7 +33,7 @@ let initialState: InitialStateType = {
         adsData: []
     },
     adAddLoad: false
-};
+}
 
 ///////////// Reduser
 const adReducer = (state: InitialStateType = initialState, action: any): InitialStateType => {
@@ -47,20 +47,20 @@ const adReducer = (state: InitialStateType = initialState, action: any): Initial
                 ...state,
                 myAdsInfo: myAdsInfo,
                 adAddLoad: true
-            };
+            }
         }
         case ADD_EDIT_AD: {
-            state.editAd = action.adData;
-            return state;
+            state.editAd = action.adData
+            return state
         }
         case ADD_POST_EDIT_AD: {
-            let newItem = state.myAdsInfo.adsData.filter((item: any) => item.idAd != action.adData.idAd);
-            newItem.push(action.adData);
-            state.myAdsInfo.adsData = newItem;
-            return state;
+            let newItem = state.myAdsInfo.adsData.filter((item: any) => item.idAd != action.adData.idAd)
+            newItem.push(action.adData)
+            state.myAdsInfo.adsData = newItem
+            return state
         }
         case DELETE_AD: {
-            let newItem = state.myAdsInfo.adsData.filter((item: any) => item.idAd != action.adId);
+            let newItem = state.myAdsInfo.adsData.filter((item: any) => item.idAd != action.adId)
 
             let myAdsInfo: AdsInfo = {
                 haveAds: true,
@@ -74,7 +74,7 @@ const adReducer = (state: InitialStateType = initialState, action: any): Initial
             return {
                 ...state,
                 myAdsInfo: myAdsInfo
-            };
+            }
         }
         case GET_ADS: {
             let adsInfo: AdsInfo = {
@@ -85,7 +85,7 @@ const adReducer = (state: InitialStateType = initialState, action: any): Initial
             return {
                 ...state,
                 adsInfo: adsInfo
-            };
+            }
         }
         case GET_MY_ADS: {
             let myAdsInfo: AdsInfo = {
@@ -95,7 +95,7 @@ const adReducer = (state: InitialStateType = initialState, action: any): Initial
             return {
                 ...state,
                 myAdsInfo: myAdsInfo
-            };
+            }
         }
         case DELETE_ALL_AD: {
 
@@ -107,7 +107,7 @@ const adReducer = (state: InitialStateType = initialState, action: any): Initial
             return {
                 ...state,
                 adsInfo: adsInfo
-            };
+            }
         }
         case DELETE_MY_AD: {
             let myAdsInfo: AdsInfo = {
@@ -117,16 +117,16 @@ const adReducer = (state: InitialStateType = initialState, action: any): Initial
             return {
                 ...state,
                 myAdsInfo: myAdsInfo
-            };
+            }
         }
         case STOP_TO_LOAD: {
             return {
                 ...state,
                 adAddLoad: false
-            };
+            }
         }
         default: {
-            return state;
+            return state
         }
     }
 
@@ -191,7 +191,7 @@ let getMyAds = (myAdsInfo: AdsInfo):GetMyAds_ActionType => ({ type: GET_MY_ADS, 
 export let getAdsThunk = (userId: string) => async (dispatch: any) => {
     let response = await apiExpress.getAds(userId);
     // console.log(response.data)
-    dispatch(getAds(response.data));
+    dispatch(getAds(response.data))
 }
 
 export let getMyAdsThunk = (userId: string) => async (dispatch: any) => {
@@ -232,7 +232,7 @@ export let AddAdThunk = (formData : any, userData: any) => async (dispatch: any)
         typeText: categoryText[formData.category],
         adData: time
     }
-    let response: any = await apiExpress.addNewAd(addData);
+    let response: any = await apiExpress.addNewAd(addData)
 
     if (response.data == 'OK') {
         dispatch(addAd());
@@ -244,4 +244,4 @@ export let AddAdThunk = (formData : any, userData: any) => async (dispatch: any)
 }
 /////////////
 
-export default adReducer;
+export default adReducer
