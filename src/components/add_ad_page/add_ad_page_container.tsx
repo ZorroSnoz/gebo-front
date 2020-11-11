@@ -3,8 +3,8 @@ import { connect, ConnectedProps } from 'react-redux'
 import AddAdPage from './add_ad_page'
 import { AddAdThunk, stopToLoad} from '../../redux/ad_reduser'
 import { Redirect } from 'react-router-dom'
-import {InitialStateAndUserDataType} from "../../types/types"
-import {AppStateType} from "../../redux/redux_store"
+import {InitialStateAndUserDataType} from '../../types/types'
+import {AppStateType} from '../../redux/redux_store'
 
 ///////////// types for props
 type PropsType = PropsFromRedux

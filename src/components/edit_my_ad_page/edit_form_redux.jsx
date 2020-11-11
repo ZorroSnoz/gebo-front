@@ -1,12 +1,16 @@
-import React from 'react';
-import { Field, reduxForm } from 'redux-form';
-import peacePicture from '../../images/peace.jpg';
-import { connect } from 'react-redux';
-import s from '../add_ad_page/add_ad_page.module.css';
+import React from 'react'
+import { Field, reduxForm } from 'redux-form'
+import peacePicture from '../../images/peace.jpg'
+import { connect } from 'react-redux'
+import s from '../add_ad_page/add_ad_page.module.css'
+import { compose } from 'redux'
 
-// :todo need added TS for redux-form component
+// :todo added TS in file
+
+///////////// Edit ad form with redux-form component
 let EditAdFormRedux = (props) => {
-    const { handleSubmit } = props;
+
+    const { handleSubmit } = props
 
     return (
         <form className={s.adForm} onSubmit={handleSubmit} >
@@ -58,9 +62,16 @@ let EditAdFormRedux = (props) => {
             <button type='submit'>ЗМІНИТИ</button>
         </form>
     )
-};
+}
 
-EditAdFormRedux = reduxForm({ form: 'edit_ad' })(EditAdFormRedux);
-EditAdFormRedux = connect(state => ({ initialValues: state.adPage.editAd }))(EditAdFormRedux);
+// function for takes type from connect()
+const connector = connect(
+    // @ts-ignore
+    state => ({ initialValues: state.adPage.editAd })
+    )
 
-export default EditAdFormRedux;
+// compose connector and HOC for redux-form
+export default compose(
+    connector,
+    reduxForm({ form: 'edit_ad' })
+)(EditAdFormRedux)

@@ -4,20 +4,19 @@ import AdItemContainer from './ad_item/ad_item_container'
 import NoAds from "../my_ad_page/no_ads"
 import AddAdButton from './add_ad_button/add_ad_button'
 import Preloader from '../preloader/preloader'
-import { connect } from 'react-redux'
+import {connect, ConnectedProps} from 'react-redux'
 import { getAdsThunk, deleteAllAd } from '../../redux/ad_reduser'
-import {AppStateType} from "../../redux/redux_store"
-import {AdsInfo, InitialStateAndUserDataType} from "../../types/types"
-
+import {AppStateType} from '../../redux/redux_store'
+import {AdsInfo, InitialStateAndUserDataType} from '../../types/types'
 
 ///////////// types for props
-type PropsType = {
+type PropsType = PropsFromRedux
+// types takes from connect() where added mapStateToProps and mapDispatchToProps
+type PropsFromRedux = ConnectedProps<typeof connector>
+// type for mapStateToProps
+type MapStatePropsType = {
     adsInfo: AdsInfo
     login: InitialStateAndUserDataType
-
-    // :todo not sure maybe need added types for functions
-    getAdsThunk: (idUser: string | null) => void
-    deleteAllAd: () => void
 }
 
 ///////////// ad page component
@@ -44,12 +43,13 @@ let Ad: FC<PropsType> = ({adsInfo, login, getAdsThunk, deleteAllAd}) => {
 }
 
 ///////////// create props for Ad component
-let mapStateToProps = (state: AppStateType) => {
+let mapStateToProps = (state: AppStateType): MapStatePropsType => {
     return {
         adsInfo: state.adPage.adsInfo,
         login: state.loginPage
     }
 }
 
-// @ts-ignore :todo maybe this nedd ignore but need specify
-export default connect(mapStateToProps, { getAdsThunk, deleteAllAd })(Ad)
+// function for takes type from connect()
+const connector = connect(mapStateToProps, { getAdsThunk, deleteAllAd })
+export default connector(Ad)

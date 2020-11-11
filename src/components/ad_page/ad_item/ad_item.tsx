@@ -1,14 +1,15 @@
-import React, {FC} from 'react';
-import s from './ad_item.module.css';
-import { NavLink } from 'react-router-dom';
-import plugPicture from '../../../images/peace.jpg';
-import Button from '@material-ui/core/Button';
-import ButtonGroup from '@material-ui/core/ButtonGroup';
-import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
-import EditIcon from '@material-ui/icons/Edit';
-import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
-import {AdDataType} from "../../../types/types";
+import React, {FC} from 'react'
+import s from './ad_item.module.css'
+import { NavLink } from 'react-router-dom'
+import plugPicture from '../../../images/peace.jpg'
+import Button from '@material-ui/core/Button'
+import ButtonGroup from '@material-ui/core/ButtonGroup'
+import MoreHorizIcon from '@material-ui/icons/MoreHoriz'
+import EditIcon from '@material-ui/icons/Edit'
+import DeleteForeverIcon from '@material-ui/icons/DeleteForever'
+import {AdDataType} from '../../../types/types'
 
+///////////// types for props
 type PropsType = {
     item: AdDataType
     userId: string | null
@@ -18,6 +19,7 @@ type PropsType = {
     deleteAd?: (idItem: string) => void
 }
 
+///////////// ad item component
 let AdItem: FC<PropsType> = ({ item, userId, editAd, deleteAd}) => {
 
     // data destructuring
@@ -61,8 +63,8 @@ let AdItem: FC<PropsType> = ({ item, userId, editAd, deleteAd}) => {
                 </div>
             </div>
         </div>
-};
+}
 
-export default AdItem;
+export default AdItem
 
 

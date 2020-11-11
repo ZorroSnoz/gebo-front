@@ -188,10 +188,13 @@ type GetMyAds_ActionType = {
 let getMyAds = (myAdsInfo: AdsInfo):GetMyAds_ActionType => ({ type: GET_MY_ADS, myAdsInfo })
 
 ///////////// Thanks
-export let getAdsThunk = (userId: string) => async (dispatch: any) => {
-    let response = await apiExpress.getAds(userId);
-    // console.log(response.data)
-    dispatch(getAds(response.data))
+export let getAdsThunk = (userId: string | null) => async (dispatch: any) => {
+    if (userId === null) {
+        console.log('error in getAdsThunk: userId === null')
+    } else {
+        let response = await apiExpress.getAds(userId);
+        dispatch(getAds(response.data))
+    }
 }
 
 export let getMyAdsThunk = (userId: string) => async (dispatch: any) => {
