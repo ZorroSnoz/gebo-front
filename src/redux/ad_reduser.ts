@@ -1,5 +1,5 @@
 import apiExpress from '../api_express/api'
-import {AdDataType, AdsInfo} from '../types/types'
+import {AdDataType, AdsInfo, EditAdFormDataType} from '../types/types'
 import dataPicker from '../services/data_picker'
 import {generatorId} from '../services/generator_id'
 
@@ -17,7 +17,7 @@ const GET_MY_ADS = 'GET_MY_ADS'
 ///////////// Initial state
 // :todo need remove any in InitialStateType
 type InitialStateType = {
-    editAd: any
+    editAd: AdDataType | {}
     myAdsInfo: AdsInfo
     adsInfo: AdsInfo
     adAddLoad: boolean
@@ -54,8 +54,18 @@ const adReducer = (state: InitialStateType = initialState, action: any): Initial
             return state
         }
         case ADD_POST_EDIT_AD: {
+
+            let categoryText = ['продаж/бартер', 'оголошення', 'продаж', 'купівля/бартер']
+            let time = dataPicker()
+            let addData = {
+                ...action.formData,
+                typeClass: action.formData.typeClass,
+                typeText: categoryText[action.formData.typeClass],
+                adData: time
+            }
+
             let newItem = state.myAdsInfo.adsData.filter((item: any) => item.idAd != action.adData.idAd)
-            newItem.push(action.adData)
+            newItem.push(addData)
             state.myAdsInfo.adsData = newItem
             return state
         }
@@ -147,10 +157,10 @@ export let editAd = (adData: AdDataType):EditAd_ActionType => ({ type: ADD_EDIT_
 
 type AdData_ActionType = {
     type: typeof ADD_POST_EDIT_AD
-    adData: AdDataType
+    formData: EditAdFormDataType
 }
 // :todo need added thunk for sync to backend
-export let addEditAd = (adData: AdDataType):AdData_ActionType => ({ type: ADD_POST_EDIT_AD, adData })
+export let addEditAd = (formData: EditAdFormDataType):AdData_ActionType => ({ type: ADD_POST_EDIT_AD, formData })
 
 export type DeleteAd_ActionType = {
     type: typeof DELETE_AD

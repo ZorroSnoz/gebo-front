@@ -1,10 +1,11 @@
 import React, {FC} from 'react'
 import s from '../add_ad_page/add_ad_page.module.css'
 import EditAdFormRedux from './edit_form_redux'
+import {EditAdFormDataType} from '../../types/types'
 
 ///////////// types for props
 type PropsType = {
-    onSubmit: (formData: object) => void
+    onSubmit: (formData: EditAdFormDataType) => void
 }
 
 ///////// edit ad component

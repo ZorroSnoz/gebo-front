@@ -1,7 +1,7 @@
 import React, {FC} from 'react'
 import { BrowserRouter, Route } from 'react-router-dom'
 import './App.css'
-import Login from './components/login_page/login'
+import Login from './components/login_page/login_page_container'
 import Ad from './components/ad_page/ad_page'
 import { connect } from 'react-redux'
 import { getCookie } from './services/cookies_functions'

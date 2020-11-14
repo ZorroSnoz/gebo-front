@@ -16,6 +16,17 @@ export type AdsInfo = {
     adsData: Array<AdDataType>
 }
 
+export type EditAdFormDataType = {
+    adData: string
+    autor: string
+    autorId: string
+    description: string
+    idAd: string
+    img: null | string
+    typeClass: string
+    typeText: string
+    _id: string
+}
 
 // login_reduser types
 export type InitialStateAndUserDataType = {
