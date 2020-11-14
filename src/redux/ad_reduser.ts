@@ -2,6 +2,8 @@ import apiExpress from '../api_express/api'
 import {AdDataType, AdsInfo, EditAdFormDataType} from '../types/types'
 import dataPicker from '../services/data_picker'
 import {generatorId} from '../services/generator_id'
+import { ThunkAction } from 'redux-thunk'
+import {AppStateType} from "./redux_store";
 
 ///////////// Const for actioncreators
 const ADD_AD = 'ADD_AD'
@@ -36,13 +38,13 @@ let initialState: InitialStateType = {
 }
 
 ///////////// Reduser
-const adReducer = (state: InitialStateType = initialState, action: any): InitialStateType => {
+const adReducer = (state: InitialStateType = initialState, action: ActionsTypes): InitialStateType => {
     switch (action.type) {
         case ADD_AD: {
-            let myAdsInfo: AdsInfo = {
-                haveAds: true,
-                adsData: action.adData
-            }
+                let myAdsInfo: AdsInfo = {
+                    haveAds: true,
+                    adsData: action.adData
+                }
             return {
                 ...state,
                 myAdsInfo: myAdsInfo,
@@ -55,16 +57,17 @@ const adReducer = (state: InitialStateType = initialState, action: any): Initial
         }
         case ADD_POST_EDIT_AD: {
 
-            let categoryText = ['продаж/бартер', 'оголошення', 'продаж', 'купівля/бартер']
-            let time = dataPicker()
-            let addData = {
+            let typeClass: number = +action.formData.typeClass
+            let categoryText: Array<string> = ['продаж/бартер', 'оголошення', 'продаж', 'купівля/бартер']
+            let time: string = dataPicker()
+            let addData: AdDataType = {
                 ...action.formData,
                 typeClass: action.formData.typeClass,
-                typeText: categoryText[action.formData.typeClass],
+                typeText: categoryText[typeClass],
                 adData: time
             }
 
-            let newItem = state.myAdsInfo.adsData.filter((item: any) => item.idAd != action.adData.idAd)
+            let newItem = state.myAdsInfo.adsData.filter((item: AdDataType) => item.idAd != addData.idAd)
             newItem.push(addData)
             state.myAdsInfo.adsData = newItem
             return state
@@ -143,11 +146,23 @@ const adReducer = (state: InitialStateType = initialState, action: any): Initial
 }
 
 ///////////// Actioncreators
+// actions types
+type ActionsTypes =
+    AddAd_ActionType |
+    EditAd_ActionType |
+    AdData_ActionType |
+    DeleteAd_ActionType |
+    DeleteAllAd_ActionType |
+    DeleteMyAd_ActionType |
+    StopToLoad_ActionType |
+    GetAds_ActionType |
+    GetMyAds_ActionType
+//
 type AddAd_ActionType = {
     type: typeof ADD_AD
-    adData: object
+    adData: Array<AdDataType>
 }
-export let addAd = ():AddAd_ActionType => ({ type: ADD_AD, adData: [] });
+export let addAd = ():AddAd_ActionType => ({ type: ADD_AD, adData: [] })
 
 export type EditAd_ActionType = {
     type: typeof ADD_EDIT_AD
@@ -170,13 +185,13 @@ export let deleteAd = (adId: string):DeleteAd_ActionType => ({ type: DELETE_AD, 
 
 type DeleteAllAd_ActionType = {
     type: typeof DELETE_ALL_AD
-    adsData: object
+    adsData: Array<AdDataType>
 }
 export let deleteAllAd = ():DeleteAllAd_ActionType => ({ type: DELETE_ALL_AD, adsData: [] })
 
 type DeleteMyAd_ActionType = {
     type: typeof DELETE_MY_AD
-    adData: object
+    adData: Array<AdDataType>
 }
 export let deleteMyAd = ():DeleteMyAd_ActionType => ({ type: DELETE_MY_AD, adData: [] })
 
@@ -197,8 +212,11 @@ type GetMyAds_ActionType = {
 }
 let getMyAds = (myAdsInfo: AdsInfo):GetMyAds_ActionType => ({ type: GET_MY_ADS, myAdsInfo })
 
-///////////// Thanks
-export let getAdsThunk = (userId: string | null) => async (dispatch: any) => {
+///////////// Thunks
+// types for thunks
+type ThunkActions = ThunkAction<Promise<void>, AppStateType, unknown, ActionsTypes>
+//
+export let getAdsThunk = (userId: string | null): ThunkActions => async (dispatch) => {
     if (userId === null) {
         console.log('error in getAdsThunk: userId === null')
     } else {
@@ -207,7 +225,7 @@ export let getAdsThunk = (userId: string | null) => async (dispatch: any) => {
     }
 }
 
-export let getMyAdsThunk = (userId: string) => async (dispatch: any) => {
+export let getMyAdsThunk = (userId: string): ThunkActions => async (dispatch) => {
     let response = await apiExpress.getMyAds(userId);
 
     if (response.data.length === 0) {
@@ -218,7 +236,7 @@ export let getMyAdsThunk = (userId: string) => async (dispatch: any) => {
     }
 }
 
-export let deleteMyAdThunk = (adId: string) => async (dispatch: any) => {
+export let deleteMyAdThunk = (adId: string): ThunkActions => async (dispatch) => {
     let response: any = await apiExpress.deleteAd(adId);
 
     if (response.data == 'OK') {
@@ -231,10 +249,10 @@ export let deleteMyAdThunk = (adId: string) => async (dispatch: any) => {
 }
 
 // :todo need fix any types in thank
-export let AddAdThunk = (formData : any, userData: any) => async (dispatch: any) => {
+export let AddAdThunk = (formData : any, userData: any): ThunkActions => async (dispatch) => {
 
-    let categoryText: Array<string> = ['продаж/бартер', 'оголошення', 'продаж', 'купівля/бартер'];
-    let time: string = dataPicker();
+    let categoryText: Array<string> = ['продаж/бартер', 'оголошення', 'продаж', 'купівля/бартер']
+    let time: string = dataPicker()
     let addData: AdDataType = {
         idAd: generatorId(),
         img: formData.adFoto = null,

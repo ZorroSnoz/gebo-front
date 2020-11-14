@@ -6,7 +6,7 @@ export type AdDataType = {
     description: string
     idAd: string
     img: null | string
-    typeClass: number
+    typeClass: string | number
     typeText: string
     _id?: string
 }
@@ -23,7 +23,7 @@ export type EditAdFormDataType = {
     description: string
     idAd: string
     img: null | string
-    typeClass: string
+    typeClass: string | number
     typeText: string
     _id: string
 }

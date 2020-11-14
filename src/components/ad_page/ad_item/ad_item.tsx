@@ -25,6 +25,9 @@ let AdItem: FC<PropsType> = ({ item, userId, editAd, deleteAd}) => {
     // data destructuring
     let { idAd, img, description, autor, autorId, typeClass, typeText, adData }: AdDataType = item;
     let typeClassName: Array<string> = [s.typeAd1, s.typeAd2, s.typeAd3, s.typeAd4]
+
+    //create number type for index array
+    typeClass = +typeClass
  
     return <div className={s.adItem}>
             <div>
