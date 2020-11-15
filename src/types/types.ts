@@ -28,9 +28,19 @@ export type EditAdFormDataType = {
     _id: string
 }
 
+export type AddAdFormDataType = {
+    adFoto: null | string
+    category: string
+    discription: string
+}
+
 // login_reduser types
 export type InitialStateAndUserDataType = {
     registered: boolean
     name: null | string
     idUser: null | string
+}
+
+export type LoginFormDataType = {
+    login: string
 }

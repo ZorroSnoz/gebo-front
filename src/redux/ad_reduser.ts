@@ -1,9 +1,9 @@
 import apiExpress from '../api_express/api'
-import {AdDataType, AdsInfo, EditAdFormDataType} from '../types/types'
+import {AddAdFormDataType, AdDataType, AdsInfo, EditAdFormDataType, InitialStateAndUserDataType} from '../types/types'
 import dataPicker from '../services/data_picker'
 import {generatorId} from '../services/generator_id'
 import { ThunkAction } from 'redux-thunk'
-import {AppStateType} from "./redux_store";
+import {AppStateType} from './redux_store'
 
 ///////////// Const for actioncreators
 const ADD_AD = 'ADD_AD'
@@ -220,7 +220,7 @@ export let getAdsThunk = (userId: string | null): ThunkActions => async (dispatc
     if (userId === null) {
         console.log('error in getAdsThunk: userId === null')
     } else {
-        let response = await apiExpress.getAds(userId);
+        let response = await apiExpress.getAds(userId)
         dispatch(getAds(response.data))
     }
 }
@@ -237,10 +237,11 @@ export let getMyAdsThunk = (userId: string): ThunkActions => async (dispatch) =>
 }
 
 export let deleteMyAdThunk = (adId: string): ThunkActions => async (dispatch) => {
-    let response: any = await apiExpress.deleteAd(adId);
 
+    // response have many data, because here any type
+    let response: any = await apiExpress.deleteAd(adId)
     if (response.data == 'OK') {
-        dispatch(deleteAd(adId));
+        dispatch(deleteAd(adId))
         console.log('Ad to delete.')
     }
     else {
@@ -248,29 +249,41 @@ export let deleteMyAdThunk = (adId: string): ThunkActions => async (dispatch) =>
     }
 }
 
-// :todo need fix any types in thank
-export let AddAdThunk = (formData : any, userData: any): ThunkActions => async (dispatch) => {
+export let AddAdThunk = (formData : AddAdFormDataType, userData: InitialStateAndUserDataType): ThunkActions => async (dispatch) => {
 
+    let category = +formData.category
     let categoryText: Array<string> = ['продаж/бартер', 'оголошення', 'продаж', 'купівля/бартер']
     let time: string = dataPicker()
-    let addData: AdDataType = {
-        idAd: generatorId(),
-        img: formData.adFoto = null,
-        description: formData.discription,
-        autor: userData.name,
-        autorId: userData.idUser,
-        typeClass: formData.category,
-        typeText: categoryText[formData.category],
-        adData: time
-    }
-    let response: any = await apiExpress.addNewAd(addData)
+    let addData: AdDataType
 
-    if (response.data == 'OK') {
-        dispatch(addAd());
-        console.log('New ad is added.')
+
+    if (userData.name != null && userData.idUser != null) {
+        let autor = userData.name
+        let autorId= userData.idUser
+
+        addData = {
+            idAd: generatorId(),
+            img: formData.adFoto = null,
+            description: formData.discription,
+            autor: autor,
+            autorId: autorId,
+            typeClass: formData.category,
+            typeText: categoryText[category],
+            adData: time
+        }
+        // response have many data, because here any type
+        let response: any = await apiExpress.addNewAd(addData)
+        if (response.data === 'OK') {
+            dispatch(addAd())
+            console.log('New ad is added.')
+        }
+        else {
+            console.log('AddAdThunk error.')
+        }
+
     }
     else {
-        console.log('AddAdThunk error.')
+        console.log('error in AddAdThunk: userData have null')
     }
 }
 /////////////

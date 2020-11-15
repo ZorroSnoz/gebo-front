@@ -28,6 +28,7 @@ let AddAdPageContainer: FC<PropsType> = ({ AddAdThunk, userData, loaded, stopToL
 
  // :todo need fix any types in function
     let onSubmit = (formData: any) => {
+        console.log(formData)
         AddAdThunk(formData, userData)
     }
     // "loaded" if true - ad added in server and redirect to my-ad page, if false render page for adding ad

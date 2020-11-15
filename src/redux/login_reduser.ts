@@ -1,7 +1,9 @@
 import apiExpress from '../api_express/api'
 import { addCookies } from '../services/cookies_functions'
-import {InitialStateAndUserDataType} from '../types/types'
+import {InitialStateAndUserDataType, LoginFormDataType} from '../types/types'
 import {generatorId} from '../services/generator_id'
+import {ThunkAction} from 'redux-thunk'
+import {AppStateType} from './redux_store'
 
 ///////////// Const for actioncreators
 const SET_AUTH_USER_DATA = 'SET_AUTH_USER_DATA'
@@ -14,7 +16,7 @@ let initialState: InitialStateAndUserDataType = {
 }
 
 ///////////// Reduser
-const loginReduser = (state = initialState, action: SetUser_ActionType): InitialStateAndUserDataType => {
+const loginReduser = (state = initialState, action: ActionsTypes): InitialStateAndUserDataType => {
     switch (action.type) {
         case SET_AUTH_USER_DATA: {
             return {
@@ -29,6 +31,9 @@ const loginReduser = (state = initialState, action: SetUser_ActionType): Initial
 }
 
 ///////////// Actioncreators
+// actions types
+type ActionsTypes = SetUser_ActionType
+//
 type SetUser_ActionType = {
     type: typeof SET_AUTH_USER_DATA
     userData: InitialStateAndUserDataType
@@ -39,15 +44,18 @@ export let setUser = (userData: InitialStateAndUserDataType): SetUser_ActionType
 })
 
 ///////////// Thanks
+// types for thunks
+type ThunkActions = ThunkAction<Promise<void>, AppStateType, unknown, ActionsTypes>
+//
 //:todo need fin any type in dispatch
-export let addNewUserThunk = (formData: any) => async (dispatch: any) => {
+export let addNewUserThunk = (formData: LoginFormDataType): ThunkActions => async (dispatch) => {
 
     let userData = { registered: true, name: formData.login, idUser: generatorId() }
 
     let response = await apiExpress.addNewUser(userData)
 
     if (response.data == 'OK') {
-        addCookies(userData);
+        addCookies(userData)
         dispatch(setUser(userData))
         console.log('New user is added.')
     }
