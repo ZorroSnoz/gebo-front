@@ -1,9 +1,10 @@
 import apiExpress from '../api_express/api'
 import { addCookies } from '../services/cookies_functions'
-import {InitialStateAndUserDataType, LoginFormDataType} from '../types/types'
+import {AdDataType, InitialStateAndUserDataType, LoginFormDataType} from '../types/types'
 import {generatorId} from '../services/generator_id'
 import {ThunkAction} from 'redux-thunk'
 import {AppStateType} from './redux_store'
+import {AxiosResponse} from "axios";
 
 ///////////// Const for actioncreators
 const SET_AUTH_USER_DATA = 'SET_AUTH_USER_DATA'
@@ -52,7 +53,7 @@ export let addNewUserThunk = (formData: LoginFormDataType): ThunkActions => asyn
 
     let userData = { registered: true, name: formData.login, idUser: generatorId() }
 
-    let response = await apiExpress.addNewUser(userData)
+    let response: AxiosResponse<string> = await apiExpress.addNewUser(userData)
 
     if (response.data == 'OK') {
         addCookies(userData)

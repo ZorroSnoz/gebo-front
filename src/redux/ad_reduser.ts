@@ -4,6 +4,7 @@ import dataPicker from '../services/data_picker'
 import {generatorId} from '../services/generator_id'
 import { ThunkAction } from 'redux-thunk'
 import {AppStateType} from './redux_store'
+import {AxiosResponse} from "axios";
 
 ///////////// Const for actioncreators
 const ADD_AD = 'ADD_AD'
@@ -220,13 +221,13 @@ export let getAdsThunk = (userId: string | null): ThunkActions => async (dispatc
     if (userId === null) {
         console.log('error in getAdsThunk: userId === null')
     } else {
-        let response = await apiExpress.getAds(userId)
+        let response: AxiosResponse<Array<AdDataType>> = await apiExpress.getAds(userId)
         dispatch(getAds(response.data))
     }
 }
 
 export let getMyAdsThunk = (userId: string): ThunkActions => async (dispatch) => {
-    let response = await apiExpress.getMyAds(userId);
+    let response: AxiosResponse<Array<AdDataType>> = await apiExpress.getMyAds(userId);
 
     if (response.data.length === 0) {
         dispatch(getMyAds({haveAds: false, adsData: []}))
@@ -239,7 +240,7 @@ export let getMyAdsThunk = (userId: string): ThunkActions => async (dispatch) =>
 export let deleteMyAdThunk = (adId: string): ThunkActions => async (dispatch) => {
 
     // response have many data, because here any type
-    let response: any = await apiExpress.deleteAd(adId)
+    let response: AxiosResponse<string> = await apiExpress.deleteAd(adId)
     if (response.data == 'OK') {
         dispatch(deleteAd(adId))
         console.log('Ad to delete.')
@@ -272,7 +273,7 @@ export let AddAdThunk = (formData : AddAdFormDataType, userData: InitialStateAnd
             adData: time
         }
         // response have many data, because here any type
-        let response: any = await apiExpress.addNewAd(addData)
+        let response: AxiosResponse<string> = await apiExpress.addNewAd(addData)
         if (response.data === 'OK') {
             dispatch(addAd())
             console.log('New ad is added.')

@@ -1,7 +1,6 @@
-import * as axios from 'axios'
+import axios from 'axios'
 import {AdDataType, InitialStateAndUserDataType} from '../types/types'
 
-// @ts-ignore
 const instance = axios.create({ baseURL: 'http://localhost:2000/' })
 
 const apiExpress = {
