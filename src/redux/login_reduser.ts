@@ -48,7 +48,6 @@ export let setUser = (userData: InitialStateAndUserDataType): SetUser_ActionType
 // types for thunks
 type ThunkActions = ThunkAction<Promise<void>, AppStateType, unknown, ActionsTypes>
 //
-//:todo need fin any type in dispatch
 export let addNewUserThunk = (formData: LoginFormDataType): ThunkActions => async (dispatch) => {
 
     let userData = { registered: true, name: formData.login, idUser: generatorId() }

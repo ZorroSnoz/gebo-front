@@ -1,11 +1,12 @@
 import React, {FC} from 'react'
 import s from './login_page.module.css'
 import logo from '../../images/gebo_logo.jpg'
-import ReduxLoginForm from './login_page_form'
+import {LoginFormDataType} from '../../types/types'
+import LoginForm from './login_page_form'
 
 ///////////// types for props
 type PropsType = {
-    onSubmit: (formData: any)=> void
+    onSubmit: (formData: LoginFormDataType)=> void
 }
 
 ///////////// login page component
@@ -18,7 +19,7 @@ let LoginPage: FC<PropsType> = ({onSubmit}) => {
       </div>
       <div className={s.loginForm}>
         <h2>ВХІД</h2>
-        <ReduxLoginForm onSubmit={onSubmit} />
+        <LoginForm onSubmit={onSubmit} />
       </div>
     </div>
   )

@@ -3,6 +3,7 @@ import { addNewUserThunk } from '../../redux/login_reduser'
 import {connect, ConnectedProps} from 'react-redux'
 import Preloader from '../preloader/preloader'
 import LoginPage from './login_page'
+import {LoginFormDataType} from '../../types/types'
 
 ///////////// types for props
 type PropsType = PropsFromRedux
@@ -14,7 +15,7 @@ let LoginPageCon: FC<PropsType> = ({addNewUserThunk}) => {
 
   const [buttonLogin, setButton] = useState(0)
 
-  let onSubmit = (formData: any) => {
+  let onSubmit = (formData: LoginFormDataType) => {
 
     addNewUserThunk(formData)
     setButton(1)

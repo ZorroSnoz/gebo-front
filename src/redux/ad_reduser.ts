@@ -250,7 +250,7 @@ export let deleteMyAdThunk = (adId: string): ThunkActions => async (dispatch) =>
     }
 }
 
-export let AddAdThunk = (formData : AddAdFormDataType, userData: InitialStateAndUserDataType): ThunkActions => async (dispatch) => {
+export let AddAdThunk = (formData: AddAdFormDataType, userData: InitialStateAndUserDataType): ThunkActions => async (dispatch) => {
 
     let category = +formData.category
     let categoryText: Array<string> = ['продаж/бартер', 'оголошення', 'продаж', 'купівля/бартер']

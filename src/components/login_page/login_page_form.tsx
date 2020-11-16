@@ -1,20 +1,18 @@
 import React, {FC} from 'react'
-import { Field, reduxForm } from 'redux-form'
+import {Field, InjectedFormProps, reduxForm} from 'redux-form'
 import InputLogin from './input_login_field'
-
-///////////// types for props
-// :todo need fix any type
-type PropsType = any
+import {LoginFormDataType} from '../../types/types'
 
 ///////////// login form component
-let LoginForm: FC<PropsType> = ({...props}) => {
+//InjectedFormProps injected type for redux-form, LoginFormDataType type for submit function arguments
+let LoginForm: FC<InjectedFormProps<LoginFormDataType>> = ({...props}) => {
     return (
         <form onSubmit={props.handleSubmit} >
             <Field name={'login'} component={InputLogin} />
             <button type='submit'>ПОГНАЛИ</button>
         </form>
     )
-};
-let ReduxLoginForm = reduxForm({ form: 'login' })(LoginForm)
+}
 
-export default ReduxLoginForm
+// LoginFormDataType for arguments in submit function
+export default reduxForm<LoginFormDataType>({ form: 'login' })(LoginForm)

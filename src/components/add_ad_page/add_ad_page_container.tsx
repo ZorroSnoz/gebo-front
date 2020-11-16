@@ -3,7 +3,7 @@ import { connect, ConnectedProps } from 'react-redux'
 import AddAdPage from './add_ad_page'
 import { AddAdThunk, stopToLoad} from '../../redux/ad_reduser'
 import { Redirect } from 'react-router-dom'
-import {InitialStateAndUserDataType} from '../../types/types'
+import {AddAdFormDataType, InitialStateAndUserDataType} from '../../types/types'
 import {AppStateType} from '../../redux/redux_store'
 
 ///////////// types for props
@@ -26,11 +26,12 @@ let AddAdPageContainer: FC<PropsType> = ({ AddAdThunk, userData, loaded, stopToL
         }
     })
 
- // :todo need fix any types in function
-    let onSubmit = (formData: any) => {
-        console.log(formData)
+    // call when form submit
+    let onSubmit = (formData: AddAdFormDataType) => {
+
         AddAdThunk(formData, userData)
     }
+
     // "loaded" if true - ad added in server and redirect to my-ad page, if false render page for adding ad
     if (loaded) {
         return  <Redirect to='/my-ad' />
