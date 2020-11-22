@@ -1,4 +1,4 @@
-import React, {FC} from 'react'
+import React, {FC, useState} from 'react'
 import {Field, InjectedFormProps, reduxForm} from 'redux-form'
 import peacePicture from '../../images/peace.jpg'
 import s from '../add_ad_page/add_ad_page.module.css'
@@ -7,10 +7,13 @@ import {AdDataType, EditAdFormDataType} from '../../types/types'
 ///////////// Types for props
 type PropsType = {
     initialValues: AdDataType | {}
+    isEditAdLoad: boolean
 }
 
 ///////////// Edit ad form with redux-form component
-let EditAdForm: FC<InjectedFormProps<EditAdFormDataType, PropsType> & PropsType>  = ({handleSubmit}) => {
+let EditAdForm: FC<InjectedFormProps<EditAdFormDataType, PropsType> & PropsType>  = ({handleSubmit, isEditAdLoad}) => {
+    // effect for disable button after click
+    const [submit, setSubmit] = useState(0)
 
     return <form className={s.adForm} onSubmit={handleSubmit} >
             <Field
@@ -58,7 +61,10 @@ let EditAdForm: FC<InjectedFormProps<EditAdFormDataType, PropsType> & PropsType>
                 <Field id='inputFile' name={'img'} type='file' component={'input'} />
                 <label htmlFor='inputFile'>ДОДАТИ ФОТО</label>
             </div>
-            <button type='submit'>ЗМІНИТИ</button>
+        {submit === 0
+            ? <button type='submit' onClick={()=>{setSubmit(1)}}>ЗМІНИТИ</button>
+            : <button>Завантаження...</button>}
+
         </form>
 }
 

@@ -2,9 +2,9 @@ import apiExpress from '../api_express/api'
 import {AddAdFormDataType, AdDataType, AdsInfo, EditAdFormDataType, InitialStateAndUserDataType} from '../types/types'
 import dataPicker from '../services/data_picker'
 import {generatorId} from '../services/generator_id'
-import { ThunkAction } from 'redux-thunk'
+import {ThunkAction} from 'redux-thunk'
 import {AppStateType} from './redux_store'
-import {AxiosResponse} from "axios";
+import {AxiosResponse} from 'axios'
 
 ///////////// Const for actioncreators
 const ADD_AD = 'ADD_AD'
@@ -16,17 +16,21 @@ const DELETE_MY_AD = 'DELETE_MY_AD'
 const STOP_TO_LOAD = 'STOP_TO_LOAD'
 const GET_ADS = 'GET_ADS'
 const GET_MY_ADS = 'GET_MY_ADS'
+const LOADING_EDIT_AD_FINISH = 'LOADING_EDIT_AD_FINISH'
 
 ///////////// Initial state
-// :todo need remove any in InitialStateType
 type InitialStateType = {
     editAd: AdDataType | {}
+    isEditAdLoad: boolean
+    isEditAdLoadFinish: boolean
     myAdsInfo: AdsInfo
     adsInfo: AdsInfo
     adAddLoad: boolean
 }
 let initialState: InitialStateType = {
     editAd: {},
+    isEditAdLoad: false,
+    isEditAdLoadFinish: false,
     myAdsInfo: {
         haveAds: true,
         adsData: []
@@ -42,10 +46,10 @@ let initialState: InitialStateType = {
 const adReducer = (state: InitialStateType = initialState, action: ActionsTypes): InitialStateType => {
     switch (action.type) {
         case ADD_AD: {
-                let myAdsInfo: AdsInfo = {
-                    haveAds: true,
-                    adsData: action.adData
-                }
+            let myAdsInfo: AdsInfo = {
+                haveAds: true,
+                adsData: action.adData
+            }
             return {
                 ...state,
                 myAdsInfo: myAdsInfo,
@@ -57,24 +61,13 @@ const adReducer = (state: InitialStateType = initialState, action: ActionsTypes)
             return state
         }
         case ADD_POST_EDIT_AD: {
-
-            let typeClass: number = +action.formData.typeClass
-            let categoryText: Array<string> = ['продаж/бартер', 'оголошення', 'продаж', 'купівля/бартер']
-            let time: string = dataPicker()
-            let addData: AdDataType = {
-                ...action.formData,
-                typeClass: action.formData.typeClass,
-                typeText: categoryText[typeClass],
-                adData: time
+            return {
+                ...state,
+                editAd: {}
             }
-
-            let newItem = state.myAdsInfo.adsData.filter((item: AdDataType) => item.idAd != addData.idAd)
-            newItem.push(addData)
-            state.myAdsInfo.adsData = newItem
-            return state
         }
         case DELETE_AD: {
-            let newItem = state.myAdsInfo.adsData.filter((item: any) => item.idAd != action.adId)
+            let newItem = state.myAdsInfo.adsData.filter((item: AdDataType) => item.idAd != action.adId)
 
             let myAdsInfo: AdsInfo = {
                 haveAds: true,
@@ -139,6 +132,9 @@ const adReducer = (state: InitialStateType = initialState, action: ActionsTypes)
                 adAddLoad: false
             }
         }
+        case LOADING_EDIT_AD_FINISH: {
+            return {...state, isEditAdLoadFinish: action.toggle}
+        }
         default: {
             return state
         }
@@ -157,61 +153,68 @@ type ActionsTypes =
     DeleteMyAd_ActionType |
     StopToLoad_ActionType |
     GetAds_ActionType |
-    GetMyAds_ActionType
+    GetMyAds_ActionType |
+    LoadEditAdFinish_ActionType
 //
 type AddAd_ActionType = {
     type: typeof ADD_AD
     adData: Array<AdDataType>
 }
-export let addAd = ():AddAd_ActionType => ({ type: ADD_AD, adData: [] })
+let addAd = (): AddAd_ActionType => ({type: ADD_AD, adData: []})
 
 export type EditAd_ActionType = {
     type: typeof ADD_EDIT_AD
     adData: AdDataType
 }
-export let editAd = (adData: AdDataType):EditAd_ActionType => ({ type: ADD_EDIT_AD, adData })
+export let editAd = (adData: AdDataType): EditAd_ActionType => ({type: ADD_EDIT_AD, adData})
 
 type AdData_ActionType = {
     type: typeof ADD_POST_EDIT_AD
-    formData: EditAdFormDataType
 }
 // :todo need added thunk for sync to backend
-export let addEditAd = (formData: EditAdFormDataType):AdData_ActionType => ({ type: ADD_POST_EDIT_AD, formData })
+let addEditAd = (): AdData_ActionType => ({type: ADD_POST_EDIT_AD})
 
 export type DeleteAd_ActionType = {
     type: typeof DELETE_AD
     adId: string
 }
-export let deleteAd = (adId: string):DeleteAd_ActionType => ({ type: DELETE_AD, adId })
+export let deleteAd = (adId: string): DeleteAd_ActionType => ({type: DELETE_AD, adId})
 
 type DeleteAllAd_ActionType = {
     type: typeof DELETE_ALL_AD
     adsData: Array<AdDataType>
 }
-export let deleteAllAd = ():DeleteAllAd_ActionType => ({ type: DELETE_ALL_AD, adsData: [] })
+export let deleteAllAd = (): DeleteAllAd_ActionType => ({type: DELETE_ALL_AD, adsData: []})
 
 type DeleteMyAd_ActionType = {
     type: typeof DELETE_MY_AD
     adData: Array<AdDataType>
 }
-export let deleteMyAd = ():DeleteMyAd_ActionType => ({ type: DELETE_MY_AD, adData: [] })
+export let deleteMyAd = (): DeleteMyAd_ActionType => ({type: DELETE_MY_AD, adData: []})
 
 type StopToLoad_ActionType = {
     type: typeof STOP_TO_LOAD
 }
-export let stopToLoad = ():StopToLoad_ActionType => ({ type: STOP_TO_LOAD })
+export let stopToLoad = (): StopToLoad_ActionType => ({type: STOP_TO_LOAD})
 
 type GetAds_ActionType = {
     type: typeof GET_ADS
     adsData: Array<AdDataType>
 }
-let getAds = (adsData: Array<AdDataType>):GetAds_ActionType => ({ type: GET_ADS, adsData })
+let getAds = (adsData: Array<AdDataType>): GetAds_ActionType => ({type: GET_ADS, adsData})
 
 type GetMyAds_ActionType = {
     type: typeof GET_MY_ADS
     myAdsInfo: AdsInfo
 }
-let getMyAds = (myAdsInfo: AdsInfo):GetMyAds_ActionType => ({ type: GET_MY_ADS, myAdsInfo })
+let getMyAds = (myAdsInfo: AdsInfo): GetMyAds_ActionType => ({type: GET_MY_ADS, myAdsInfo})
+
+type LoadEditAdFinish_ActionType = {
+    type: typeof LOADING_EDIT_AD_FINISH
+    toggle: boolean
+}
+
+export let changeLoadEditAdFinish = (toggle: boolean): LoadEditAdFinish_ActionType => ({type: LOADING_EDIT_AD_FINISH, toggle: toggle})
 
 ///////////// Thunks
 // types for thunks
@@ -231,8 +234,7 @@ export let getMyAdsThunk = (userId: string): ThunkActions => async (dispatch) =>
 
     if (response.data.length === 0) {
         dispatch(getMyAds({haveAds: false, adsData: []}))
-    }
-    else {
+    } else {
         dispatch(getMyAds({haveAds: true, adsData: response.data}))
     }
 }
@@ -244,8 +246,7 @@ export let deleteMyAdThunk = (adId: string): ThunkActions => async (dispatch) =>
     if (response.data == 'OK') {
         dispatch(deleteAd(adId))
         console.log('Ad to delete.')
-    }
-    else {
+    } else {
         console.log('DeleteMyAdThunk error.')
     }
 }
@@ -260,7 +261,7 @@ export let AddAdThunk = (formData: AddAdFormDataType, userData: InitialStateAndU
 
     if (userData.name != null && userData.idUser != null) {
         let autor = userData.name
-        let autorId= userData.idUser
+        let autorId = userData.idUser
 
         addData = {
             idAd: generatorId(),
@@ -277,14 +278,33 @@ export let AddAdThunk = (formData: AddAdFormDataType, userData: InitialStateAndU
         if (response.data === 'OK') {
             dispatch(addAd())
             console.log('New ad is added.')
-        }
-        else {
+        } else {
             console.log('AddAdThunk error.')
         }
 
-    }
-    else {
+    } else {
         console.log('error in AddAdThunk: userData have null')
+    }
+}
+
+export let AddEditAdThunk = (formData: EditAdFormDataType): ThunkActions => async (dispatch) => {
+
+    let typeClass: number = +formData.typeClass
+    let categoryText: Array<string> = ['продаж/бартер', 'оголошення', 'продаж', 'купівля/бартер']
+    let time: string = dataPicker()
+    let addData: AdDataType = {
+        ...formData,
+        typeClass: formData.typeClass,
+        typeText: categoryText[typeClass],
+        adData: time
+    }
+    let response: AxiosResponse<string> = await apiExpress.editAd(addData)
+
+    if (response.statusText === 'OK') {
+        dispatch(addEditAd())
+        dispatch(changeLoadEditAdFinish(true))
+    } else {
+        console.log(`error in AddEditAdThunk`)
     }
 }
 /////////////
