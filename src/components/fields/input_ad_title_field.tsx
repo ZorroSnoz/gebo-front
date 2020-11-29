@@ -5,7 +5,7 @@ import s from './fields.module.css'
 // :todo need fix any type
 type PropsType = any
 
-///////////// input component for login Field
+///////////// input component for title ad Field
 let InputAdTitle: FC<PropsType> = ({input, meta, ...props}) => {
 
     let hasError = meta.touched && meta.error;

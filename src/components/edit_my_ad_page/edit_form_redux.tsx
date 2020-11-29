@@ -3,6 +3,9 @@ import {Field, InjectedFormProps, reduxForm} from 'redux-form'
 import peacePicture from '../../images/peace.jpg'
 import s from '../add_ad_page/add_ad_page.module.css'
 import {AdDataType, EditAdFormDataType} from '../../types/types'
+import AdRadioGroup from '../fields/radio_group'
+import {maxLength200, minLength10, required} from '../../services/validations'
+import InputAdTitle from "../fields/input_ad_title_field";
 
 ///////////// Types for props
 type PropsType = {
@@ -11,60 +14,37 @@ type PropsType = {
 }
 
 ///////////// Edit ad form with redux-form component
-let EditAdForm: FC<InjectedFormProps<EditAdFormDataType, PropsType> & PropsType>  = ({handleSubmit, isEditAdLoad}) => {
+let EditAdForm: FC<InjectedFormProps<EditAdFormDataType, PropsType> & PropsType>  = ({handleSubmit, ...props}) => {
     // effect for disable button after click
     const [submit, setSubmit] = useState(0)
+    console.log(props)
 
     return <form className={s.adForm} onSubmit={handleSubmit} >
             <Field
-                placeholder={'Опис оголошення*'}
-                type={'text'}
                 name={'description'}
-                component={'input'} />
+                component={InputAdTitle}
+            validate ={[required, maxLength200, minLength10]}/>
             <h2>Категорія*</h2>
-            <div className={s.radioBlock}>
-                <div>
-                    <Field
-                        id='radio1'
-                        name={'typeClass'}
-                        type='radio'
-                        value="0"
-                        component={'input'} />
-                    <label htmlFor='radio1'>продати/обміняти</label>
-                    <Field
-                        id='radio2'
-                        name={'typeClass'}
-                        type='radio'
-                        value="1"
-                        component={'input'} />
-                    <label htmlFor='radio2'>оголошення</label>
-                </div>
-                <div>
-                    <Field
-                        id='radio3'
-                        name={'typeClass'}
-                        type='radio'
-                        value="2"
-                        component={'input'} />
-                    <label htmlFor='radio3'>продати</label>
-                    <Field
-                        id='radio4'
-                        name={'typeClass'}
-                        type='radio'
-                        value="3"
-                        component={'input'} />
-                    <label htmlFor='radio4'>купити/обміняти</label>
-                </div>
-            </div>
+        <Field component={AdRadioGroup} name={'typeClass'} validate={[required]} options={[
+            {title: 'продати/обміняти', value: '0', id: 'radio1'},
+            {title: 'оголошення', value: '1', id: 'radio2'},
+            {title: 'продати', value: '2', id: 'radio3'},
+            {title: 'купити/обміняти', value: '3', id: 'radio4'}
+        ]}/>
             <div className={s.inputFile}>
                 <img className={s.adFoto} src={peacePicture} />
                 <Field id='inputFile' name={'img'} type='file' component={'input'} />
                 <label htmlFor='inputFile'>ДОДАТИ ФОТО</label>
             </div>
         {submit === 0
-            ? <button type='submit' onClick={()=>{setSubmit(1)}}>ЗМІНИТИ</button>
-            : <button>Завантаження...</button>}
-
+            // :TODO need added really disabled button when form submitted, now <button>Завантаження...</button> send data
+            ?
+            <button type='submit'
+                    onClick={() => {
+                        setSubmit(1)
+                    }}
+            >ЗМІНИТИ</button>
+            : props.invalid ? setSubmit(0) : <button>Завантаження...</button>}
         </form>
 }
 
