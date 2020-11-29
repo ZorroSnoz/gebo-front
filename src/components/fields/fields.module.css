@@ -1,0 +1,44 @@
+.inputForm {
+  background-color: #212121;
+  color: white;
+  border: solid 2px #64b5f6;
+  padding: 10px;
+  text-align: center;
+  border-radius: 50px;
+  font-size: 20px;
+  margin: 10px;
+  outline: none;
+  transition: 0.25s;
+  width: 90%;
+}
+.loginField {
+  width: 200px;
+}
+.errorInput {
+  border-color: #e64646 !important;
+}
+.inputField {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+.errorSpan {
+  color: white;
+  position: absolute;
+  left: 10px;
+  top: -12px;
+  display: block;
+  padding: 5px;
+  border-radius: 50px;
+  background-color: #e64646;
+  white-space: nowrap;
+}
+.inputForm::placeholder {
+  color: #7D7D7D;
+  font-size: 20px;
+}
+.loginField:focus {
+  width: 250px;
+  border-color: #81c784;
+}
+/*# sourceMappingURL=fields.module.css.map */

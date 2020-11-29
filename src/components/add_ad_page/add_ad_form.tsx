@@ -2,6 +2,8 @@ import React, {FC, useState} from 'react'
 import s from './add_ad_page.module.css'
 import { Field, reduxForm, InjectedFormProps } from 'redux-form'
 import {AddAdFormDataType} from '../../types/types'
+import InputAdTitle from '../fields/input_ad_title_field'
+import {maxLength200, minLength10, required} from '../../services/validations'
 
 /////////////  add ad form component
 //InjectedFormProps injected type for redux-form, AddAdFormDataType type for submit function arguments
@@ -12,10 +14,9 @@ let AddAdForm: FC<InjectedFormProps<AddAdFormDataType>> = ({handleSubmit}) => {
 
     return <form className={s.adForm} onSubmit={handleSubmit} >
             <Field
-                placeholder={'Опис оголошення*'}
-                type={'text'}
                 name={'discription'}
-                component={'input'} />
+                component={InputAdTitle}
+                validate={[required, maxLength200, minLength10]}/>
             <h2>Я хочу*</h2>
             <div className={s.radioBlock}>
                 <div>
